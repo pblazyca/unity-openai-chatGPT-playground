@@ -1,0 +1,62 @@
+.unity-label {
+    white-space: normal;
+}
+
+.unity-base-text-field {
+    white-space: normal;
+}
+
+.chat-item {
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-color: rgba(0, 0, 0, 0.03);
+    border-right-color: rgba(0, 0, 0, 0.03);
+    border-top-color: rgba(0, 0, 0, 0.03);
+    border-bottom-color: rgba(0, 0, 0, 0.03);
+    flex-shrink: 0;
+    max-width: 90%;
+}
+
+.chat-item-user {
+    align-self: flex-end;
+    background-color: rgb(42, 42, 42);
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+.chat-item-gpt {
+    align-self: flex-start;
+    background-color: rgb(88, 88, 88);
+    border-bottom-right-radius: 8px;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+.tab-item {
+    flex-grow: 0;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    -unity-text-align: upper-center;
+    white-space: nowrap;
+}
+
+.tab-item-selected {
+    background-color: rgb(36, 36, 41);
+}

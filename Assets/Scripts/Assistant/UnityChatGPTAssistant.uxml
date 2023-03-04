@@ -1,22 +1,21 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Scripts/Assistant/UnityChatGPTAssistant.uss?fileID=7433441132597879392&amp;guid=c98804df7478bf54f90d0e1e34d3b60b&amp;type=3#UnityChatGPTAssistant" />
     <ui:VisualElement name="menuRoot" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row;">
         <ui:VisualElement name="tabs" style="flex-grow: 0; background-color: rgba(0, 0, 0, 0); flex-direction: column; flex-basis: 20%; flex-shrink: 1; border-right-width: 2px;">
-            <ui:Label tabindex="-1" text="Chat" display-tooltip-when-elided="true" name="ChatTab" enable-rich-text="true" style="flex-grow: 0; -unity-text-align: upper-center; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: 4px; background-color: rgb(37, 37, 46); padding-left: 4px; padding-right: 4px; padding-top: 4px; padding-bottom: 4px;" />
-            <ui:Label tabindex="-1" text="Settings" display-tooltip-when-elided="true" name="SettingsTab" style="flex-grow: 0; -unity-text-align: upper-center; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: 4px; padding-left: 4px; padding-right: 4px; padding-top: 4px; padding-bottom: 4px;" />
-            <ui:Label tabindex="-1" text="Debug" display-tooltip-when-elided="true" name="DebugTab" style="flex-grow: 0; -unity-text-align: upper-center; margin-left: 4px; margin-right: 4px; margin-top: 4px; margin-bottom: 4px; padding-left: 4px; padding-right: 4px; padding-top: 4px; padding-bottom: 4px;" />
+            <ui:Label tabindex="-1" text="Chat" display-tooltip-when-elided="true" name="ChatTab" enable-rich-text="true" class="tab-item tab-item-selected" />
+            <ui:Label tabindex="-1" text="Settings" display-tooltip-when-elided="true" name="SettingsTab" class="tab-item" />
+            <ui:Label tabindex="-1" text="Debug" display-tooltip-when-elided="true" name="DebugTab" class="tab-item" />
         </ui:VisualElement>
         <ui:VisualElement name="tabContent" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-basis: 80%;">
             <ui:VisualElement name="ChatContent" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0);">
                 <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="ChatView" style="flex-grow: 1; flex-direction: column; justify-content: flex-start;">
-                    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" />
-                    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" />
-                    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" style="align-self: flex-end;" />
-                    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" />
-                    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" style="align-self: flex-end;" />
-                    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" />
+                    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-user chat-item" />
+                    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-gpt chat-item" />
+                    <ui:Label tabindex="-1" text="sdfgsdfg sgrg sdgdfsg sdgsdfg sd fgdfsg sdfgsdfg sdfgsdfgs dfds fgsdfg sdfg sdfgsdfg sdf gsfdsf sdf ssfsf df sdf sdfsd fsd fs fdss fsf sfsghgjhghjhjjhhjg asd asd a " display-tooltip-when-elided="true" name="Label" class="chat-item-user chat-item" />
+                    <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" class="chat-item-gpt chat-item abc" />
                 </ui:ScrollView>
-                <ui:TextField picking-mode="Ignore" value="filler text" multiline="true" name="PromptInput" max-length="-1" style="flex-grow: 0; flex-basis: 30%; flex-shrink: 0; height: 99px;" />
-                <ui:Button text="send prompt" display-tooltip-when-elided="true" name="SendButton" />
+                <ui:TextField picking-mode="Ignore" value="filler text" multiline="true" name="PromptInput" max-length="-1" style="flex-grow: 0; flex-basis: 30%; flex-shrink: 0; height: 99px; margin-left: 3px; margin-right: 3px; margin-top: 10px; margin-bottom: 5px;" />
+                <ui:Button text="send" display-tooltip-when-elided="true" name="SendButton" />
             </ui:VisualElement>
             <ui:VisualElement name="SettingsContent" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); display: none;" />
         </ui:VisualElement>
