@@ -4,27 +4,19 @@ using UnityEngine.UIElements;
 
 public class UnityChatGPTAssistant : EditorWindow
 {
-    [SerializeField]
-    private VisualTreeAsset m_VisualTreeAsset = default;
+    [field: SerializeField]
+    private VisualTreeAsset VisualTreeAsset { get; set; } = default;
 
-    [MenuItem("Window/UI Toolkit/UnityChatGPTAssistant")]
-    public static void ShowExample()
+    [MenuItem("Tools/Chat GPT Assistant")]
+    public static void ShowAssistant()
     {
-        UnityChatGPTAssistant wnd = GetWindow<UnityChatGPTAssistant>();
-        wnd.titleContent = new GUIContent("UnityChatGPTAssistant");
+        UnityChatGPTAssistant window = GetWindow<UnityChatGPTAssistant>();
+        window.titleContent = new GUIContent("Chat GPT Assistant");
     }
 
     public void CreateGUI()
     {
-        // Each editor window contains a root VisualElement object
-        VisualElement root = rootVisualElement;
-
-        // VisualElements objects can contain other VisualElement following a tree hierarchy.
-        VisualElement label = new Label("Hello World! From C#");
-        root.Add(label);
-
-        // Instantiate UXML
-        VisualElement labelFromUXML = m_VisualTreeAsset.Instantiate();
-        root.Add(labelFromUXML);
+        VisualElement root = VisualTreeAsset.Instantiate();
+        rootVisualElement.Add(root);
     }
 }
