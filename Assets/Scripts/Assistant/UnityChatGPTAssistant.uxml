@@ -8,13 +8,18 @@
         </ui:VisualElement>
         <ui:VisualElement name="tabContent" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-basis: 80%;">
             <ui:VisualElement name="ChatContent" style="background-color: rgba(0, 0, 0, 0); flex-grow: 1; flex-shrink: 0;">
-                <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="ChatView" style="flex-grow: 1; flex-direction: column; justify-content: flex-start;">
+                <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="ChatView" style="flex-grow: 1; flex-direction: column; justify-content: flex-start; max-height: 600px;">
                     <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-user chat-item" style="display: none;" />
                     <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-gpt chat-item" style="display: none;" />
                     <ui:Label tabindex="-1" text="sdfgsdfg sgrg sdgdfsg sdgsdfg sd fgdfsg sdfgsdfg sdfgsdfgs dfds fgsdfg sdfg sdfgsdfg sdf gsfdsf sdf ssfsf df sdf sdfsd fsd fs fdss fsf sfsghgjhghjhjjhhjg asd asd a " display-tooltip-when-elided="true" name="Label" class="chat-item-user chat-item" style="display: none;" />
                     <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item abc" style="display: none;" />
+                    <ui:Label tabindex="-1" text="sdfgsdfg sgrg sdgdfsg sdgsdfg sd fgdfsg sdfgsdfg sdfgsdfgs dfds fgsdfg sdfg sdfgsdfg sdf gsfdsf sdf ssfsf df sdf sdfsd fsd fs fdss fsf sfsghgjhghjhjjhhjg asd asd a " display-tooltip-when-elided="true" name="Label" class="chat-item-user chat-item" style="display: none;" />
+                    <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item abc" style="display: none;" />
+                    <ui:Label tabindex="-1" text="sdfgsdfg sgrg sdgdfsg sdgsdfg sd fgdfsg sdfgsdfg sdfgsdfgs dfds fgsdfg sdfg sdfgsdfg sdf gsfdsf sdf ssfsf df sdf sdfsd fsd fs fdss fsf sfsghgjhghjhjjhhjg asd asd a " display-tooltip-when-elided="true" name="Label" class="chat-item-user chat-item" style="display: none;" />
+                    <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item abc" style="display: none;" />
+                    <ui:Label tabindex="-1" text="sdfgsdfg sgrg sdgdfsg sdgsdfg sd fgdfsg sdfgsdfg sdfgsdfgs dfds fgsdfg sdfg sdfgsdfg sdf gsfdsf sdf ssfsf df sdf sdfsd fsd fs fdss fsf sfsghgjhghjhjjhhjg asd asd a " display-tooltip-when-elided="true" name="Label" class="chat-item-user chat-item" style="display: none;" />
                 </ui:ScrollView>
-                <ui:VisualElement name="PromptView" style="background-color: rgba(0, 0, 0, 0); justify-content: flex-end;">
+                <ui:VisualElement name="PromptView" style="background-color: rgba(0, 0, 0, 0); justify-content: flex-end; margin-top: 10px;">
                     <ui:TextField picking-mode="Ignore" value="filler text" multiline="true" name="PromptInput" max-length="-1" style="margin-left: 3px; margin-right: 3px; margin-top: 0; margin-bottom: 5px; min-height: 50px;" />
                     <ui:Button text="send" display-tooltip-when-elided="true" name="SendButton" />
                 </ui:VisualElement>
