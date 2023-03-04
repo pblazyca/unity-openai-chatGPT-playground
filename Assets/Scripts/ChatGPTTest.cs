@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using OpenAI;
+using OpenAI.Chat;
 using OpenAI.Models;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class ChatGPTTest : MonoBehaviour
         OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
 
         PrintAllOpenAIModels();
+        PrintFirstAnswer();
     }
 
     private async void PrintAllOpenAIModels()
@@ -24,6 +26,27 @@ public class ChatGPTTest : MonoBehaviour
         foreach (Model model in models)
         {
             Debug.Log(model.ToString());
+        }
+    }
+
+    private async void PrintFirstAnswer()
+    {
+        List<ChatPrompt> chatPrompts = new()
+        {
+            new ("system", "You are a helpful assistant."),
+            new ("user", "Who won the world series in 2020?"),
+            new ("assistant", "The Los Angeles Dodgers won the World Series in 2020."),
+            new ("user", "Where was it played?"),
+        };
+
+        ChatRequest chatRequest = new(chatPrompts);
+        ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
+        Debug.Log(result.FirstChoice);
+        Debug.Log(result.Usage.TotalTokens);
+
+        foreach (var item in result.Choices)
+        {
+            Debug.Log(item);
         }
     }
 }
