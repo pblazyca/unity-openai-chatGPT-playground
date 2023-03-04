@@ -8,7 +8,9 @@ using UnityEngine.UIElements;
 public class UnityChatGPTAssistant : EditorWindow
 {
     [field: SerializeField]
-    private VisualTreeAsset VisualTreeAsset { get; set; } = default;
+    private VisualTreeAsset VisualTreeAsset { get; set; }
+    [field: SerializeField]
+    private StyleSheet AssistantStyleSheet { get; set; }
 
     private OpenAIClient OpenAI { get; set; }
 
@@ -48,21 +50,24 @@ public class UnityChatGPTAssistant : EditorWindow
 
         ChatRequest chatRequest = new(chatPrompts);
 
-        Label userPrompt = new();
-        userPrompt.text = prompt;
-        userPrompt.style.alignSelf = Align.FlexEnd;
+        Label userPrompt = new(prompt);
+        userPrompt.styleSheets.Add(AssistantStyleSheet);
+        userPrompt.AddToClassList("chat-item");
+        userPrompt.AddToClassList("chat-item-user");
         chatView.Add(userPrompt);
 
         ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
 
-        Label chatResponse = new();
-        chatResponse.text = result.FirstChoice.ToString();
-        chatResponse.style.alignSelf = Align.FlexStart;
+        Label chatResponse = new(result.FirstChoice.ToString());
+        chatResponse.styleSheets.Add(AssistantStyleSheet);
+        chatResponse.AddToClassList("chat-item");
+        chatResponse.AddToClassList("chat-item-gpt");
         chatView.Add(chatResponse);
 
-        Label tokenUsage = new();
-        tokenUsage.text = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
-        tokenUsage.style.alignSelf = Align.FlexStart;
+        Label tokenUsage = new($"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}");
+        tokenUsage.styleSheets.Add(AssistantStyleSheet);
+        tokenUsage.AddToClassList("chat-item");
+        tokenUsage.AddToClassList("chat-item-gpt");
         chatView.Add(tokenUsage);
     }
 }

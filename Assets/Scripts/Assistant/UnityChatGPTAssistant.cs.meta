@@ -7,6 +7,8 @@ MonoImporter:
   - m_ViewDataDictionary: {instanceID: 0}
   - <VisualTreeAsset>k__BackingField: {fileID: 9197481963319205126, guid: c673d7ae6fcae3a409b227fa88d47514,
       type: 3}
+  - <AssistantStyleSheet>k__BackingField: {fileID: 7433441132597879392, guid: c98804df7478bf54f90d0e1e34d3b60b,
+      type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
