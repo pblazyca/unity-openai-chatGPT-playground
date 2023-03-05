@@ -7,14 +7,10 @@
 }
 
 .chat-item {
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 5px;
-    padding-bottom: 5px;
     margin-left: 2px;
     margin-right: 2px;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     border-left-width: 1px;
     border-right-width: 1px;
     border-top-width: 1px;
@@ -24,7 +20,10 @@
     border-top-color: rgba(0, 0, 0, 0.03);
     border-bottom-color: rgba(0, 0, 0, 0.03);
     flex-shrink: 0;
-    max-width: 90%;
+    flex-grow: 0;
+    background-color: rgb(42, 42, 42);
+    padding-top: 3px;
+    padding-bottom: 3px;
 }
 
 .chat-item-user {
@@ -33,6 +32,10 @@
     border-top-right-radius: 8px;
     border-bottom-left-radius: 8px;
     border-top-left-radius: 8px;
+    -unity-text-align: upper-right;
+    margin-left: 20px;
+    padding-right: 5px;
+    padding-left: 4px;
 }
 
 .chat-item-gpt {
@@ -41,16 +44,19 @@
     border-bottom-right-radius: 8px;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
+    margin-right: 20px;
+    padding-left: 5px;
+    padding-right: 4px;
 }
 
 .tab-item {
     flex-grow: 0;
-    margin-left: 4px;
-    margin-right: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
     margin-top: 4px;
     margin-bottom: 4px;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
     padding-top: 4px;
     padding-bottom: 4px;
     -unity-text-align: upper-center;
@@ -59,4 +65,30 @@
 
 .tab-item-selected {
     background-color: rgb(36, 36, 41);
+}
+
+.root-panel {
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.grow-panel {
+    flex-grow: 1;
+}
+
+.chat-view {
+    max-height: 80%;
+}
+
+.prompt-view {
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.prompot-input {
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 0;
+    margin-bottom: 5px;
+    min-height: 50px;
 }
