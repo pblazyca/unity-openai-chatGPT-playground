@@ -3,15 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
 
 public class ChatArchive
 {
     [field: SerializeField]
     private ArchiveData Data { get; set; } = new();
 
-    public void LoadConversation()
+    public List<(string prompt, string response)> LoadConversation()
     {
+        string fileName = $"chat-conversation-0000-{DateTime.Now.ToString("yyyyMMdd")}.json";
+        string filePath = Application.persistentDataPath + "/" + fileName;
 
+        if (File.Exists(filePath) == true)
+        {
+            Data = JsonConvert.DeserializeObject<ArchiveData>(File.ReadAllText(filePath));
+            List<(string, string)> dataCollection = new();
+
+            for (int i = 0; i < Data.ChatSaveDataCollection.Count; i++)
+            {
+                (string, string) dataItem = new();
+
+                if (Data.ChatSaveDataCollection[i].type == ChatItemType.USER)
+                {
+                    dataItem.Item1 = Data.ChatSaveDataCollection[i].text;
+                    dataItem.Item2 = Data.ChatSaveDataCollection[i + 1].text;
+
+                    dataCollection.Add(dataItem);
+                }
+            }
+
+            return dataCollection;
+        }
+
+        return null;
     }
 
     public void SaveChatResponse(string response)
@@ -40,16 +65,14 @@ public class ChatArchive
         //    File.Create(filePath);
         //}
 
-        string saveData = JsonUtility.ToJson(Data);
-        Debug.Log(saveData);
+        string saveData = JsonConvert.SerializeObject(Data);
         File.WriteAllText(filePath, saveData);
     }
 
     [System.Serializable]
     private class ArchiveData
     {
-        [field: SerializeField]
-        public List<ChatSaveData> ChatSaveDataCollection { get; private set; } = new();
+        public List<ChatSaveData> ChatSaveDataCollection = new();
 
         public void Add(ChatSaveData data)
         {
@@ -57,16 +80,15 @@ public class ChatArchive
         }
     }
 
-
     [System.Serializable]
     private class ChatSaveData
     {
         [SerializeField]
         private long timestamp;
         [SerializeField]
-        private ChatItemType type;
+        public ChatItemType type;
         [SerializeField]
-        private string text;
+        public string text;
 
         public ChatSaveData(long timestamp, ChatItemType type, string text)
         {

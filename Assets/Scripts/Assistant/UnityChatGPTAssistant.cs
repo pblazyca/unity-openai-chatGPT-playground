@@ -64,6 +64,17 @@ public class UnityChatGPTAssistant : EditorWindow
             rootVisualElement.Q<VisualElement>("ArchiveContent").style.display = DisplayStyle.None;
         });
 
+        ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
+
+        if (ChatArchive.LoadConversation() != null)
+        {
+            foreach (var item in ChatArchive.LoadConversation())
+            {
+                chatView.Add(CreateUserPromptItem(item.prompt));
+                chatView.Add(CreateChatResponseItem(item.response));
+            }
+        }
+
         rootVisualElement.Q<Button>("SendButton").clicked += SendPrompt;
     }
 
@@ -81,32 +92,49 @@ public class UnityChatGPTAssistant : EditorWindow
 
         ChatRequest chatRequest = new(chatPrompts);
 
-        Label userPrompt = new(prompt);
-        userPrompt.styleSheets.Add(AssistantStyleSheet);
-        userPrompt.AddToClassList("chat-item");
-        userPrompt.AddToClassList("chat-item-user");
-        userPrompt.selection.isSelectable = true;
-        chatView.Add(userPrompt);
-
+        chatView.Add(CreateUserPromptItem(prompt));
         ChatArchive.SaveUserPrompt(prompt);
 
         ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
 
-        Label chatResponse = new(result.FirstChoice.ToString());
+        chatView.Add(CreateChatResponseItem(result.FirstChoice.ToString()));
+        ChatArchive.SaveChatResponse(result.FirstChoice.ToString());
+
+        string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
+        chatView.Add(CreateChatResponseStatisticsItem(stats));
+    }
+
+    private Label CreateUserPromptItem(string text)
+    {
+        Label userPrompt = new(text);
+        userPrompt.styleSheets.Add(AssistantStyleSheet);
+        userPrompt.AddToClassList("chat-item");
+        userPrompt.AddToClassList("chat-item-user");
+        userPrompt.selection.isSelectable = true;
+
+        return userPrompt;
+    }
+
+    private Label CreateChatResponseItem(string text)
+    {
+        Label chatResponse = new(text);
         chatResponse.styleSheets.Add(AssistantStyleSheet);
         chatResponse.AddToClassList("chat-item");
         chatResponse.AddToClassList("chat-item-gpt");
         chatResponse.selection.isSelectable = true;
-        chatView.Add(chatResponse);
 
-        ChatArchive.SaveChatResponse(chatResponse.text);
+        return chatResponse;
+    }
 
-        Label tokenUsage = new($"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}");
+    private Label CreateChatResponseStatisticsItem(string text)
+    {
+        Label tokenUsage = new(text);
         tokenUsage.styleSheets.Add(AssistantStyleSheet);
         tokenUsage.AddToClassList("chat-item");
         tokenUsage.AddToClassList("chat-item-gpt");
         tokenUsage.AddToClassList("chat-item-statistics");
         tokenUsage.selection.isSelectable = true;
-        chatView.Add(tokenUsage);
+
+        return tokenUsage;
     }
 }
