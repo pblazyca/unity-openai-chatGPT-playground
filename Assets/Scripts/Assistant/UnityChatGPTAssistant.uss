@@ -93,7 +93,6 @@
 }
 
 .chat-view {
-    max-height: 80%;
     margin-top: 8px;
     margin-bottom: 8px;
 }
