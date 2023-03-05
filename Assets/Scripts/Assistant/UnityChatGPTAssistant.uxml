@@ -8,6 +8,9 @@
         </ui:VisualElement>
         <ui:VisualElement name="tabContent">
             <ui:VisualElement name="ChatContent" class="grow-panel">
+                <ui:VisualElement name="SystemView" style="margin-top: 5px;">
+                    <ui:TextField picking-mode="Ignore" value="You are a helpful assistant giving short answer." multiline="true" name="SystemHelpInput" max-length="-1" />
+                </ui:VisualElement>
                 <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="ChatView" class="grow-panel chat-view">
                     <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-user chat-item" style="display: none;" />
                     <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-gpt chat-item" style="display: none;" />

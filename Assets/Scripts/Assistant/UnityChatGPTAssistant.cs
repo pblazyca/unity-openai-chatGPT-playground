@@ -41,11 +41,12 @@ public class UnityChatGPTAssistant : EditorWindow
     private async void SendPrompt()
     {
         string prompt = rootVisualElement.Q<TextField>("PromptInput").value;
+        string systemHelpMessage = rootVisualElement.Q<TextField>("SystemHelpInput").value;
         ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
 
         List<ChatPrompt> chatPrompts = new()
         {
-            new ("system", "You are a helpful assistant."),
+            new ("system", systemHelpMessage),
             new ("user", prompt)
         };
 
