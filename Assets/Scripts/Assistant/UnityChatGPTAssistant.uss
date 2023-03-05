@@ -94,3 +94,7 @@
     margin-bottom: 2px;
     min-height: 50px;
 }
+
+.space-between-panel {
+    justify-content: space-between;
+}
