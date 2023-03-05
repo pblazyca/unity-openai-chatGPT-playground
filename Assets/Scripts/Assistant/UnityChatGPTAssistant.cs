@@ -35,6 +35,18 @@ public class UnityChatGPTAssistant : EditorWindow
         string configFilePath = $"{Application.dataPath}";
         OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
 
+        rootVisualElement.Q<DropdownField>("SystemHelpDropdown").choices = new()
+        {
+            "You're helpful assistant giving short answer",
+            "You're helpful assistant giving bullet points answer",
+            "You're helpful assistant support with Unity giving detailed answer",
+            "You're helpful assistant giving step by step instruction",
+            "You're helpful assistant listing action points from user prompt"
+        };
+
+        rootVisualElement.Q<DropdownField>("SystemHelpDropdown").index = 0;
+        rootVisualElement.Q<DropdownField>("SystemHelpDropdown").RegisterValueChangedCallback((e) => rootVisualElement.Q<TextField>("SystemHelpInput").value = rootVisualElement.Q<DropdownField>("SystemHelpDropdown").value);
+
         rootVisualElement.Q<Button>("SendButton").clicked += SendPrompt;
     }
 
