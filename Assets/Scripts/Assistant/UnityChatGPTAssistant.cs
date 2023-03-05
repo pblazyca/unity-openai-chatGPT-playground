@@ -99,7 +99,7 @@ public class UnityChatGPTAssistant : EditorWindow
         chatResponse.selection.isSelectable = true;
         chatView.Add(chatResponse);
 
-        ChatArchive.SaveUserPrompt(chatResponse.text);
+        ChatArchive.SaveChatResponse(chatResponse.text);
 
         Label tokenUsage = new($"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}");
         tokenUsage.styleSheets.Add(AssistantStyleSheet);
