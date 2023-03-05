@@ -24,6 +24,7 @@ public class UnityChatGPTAssistant : EditorWindow
     public void CreateGUI()
     {
         VisualElement root = VisualTreeAsset.Instantiate();
+        root.AddToClassList("root-panel");
         rootVisualElement.Add(root);
 
         Initialize();

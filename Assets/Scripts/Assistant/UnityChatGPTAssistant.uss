@@ -1,9 +1,11 @@
 .unity-label {
     white-space: normal;
+    font-size: 14px;
 }
 
 .unity-base-text-field {
     white-space: normal;
+    font-size: 14px;
 }
 
 .chat-item {
@@ -89,6 +91,6 @@
     margin-left: 3px;
     margin-right: 3px;
     margin-top: 0;
-    margin-bottom: 5px;
+    margin-bottom: 2px;
     min-height: 50px;
 }
