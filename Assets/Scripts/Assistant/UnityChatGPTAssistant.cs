@@ -56,6 +56,7 @@ public class UnityChatGPTAssistant : EditorWindow
         userPrompt.styleSheets.Add(AssistantStyleSheet);
         userPrompt.AddToClassList("chat-item");
         userPrompt.AddToClassList("chat-item-user");
+        userPrompt.selection.isSelectable = true;
         chatView.Add(userPrompt);
 
         ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
@@ -64,12 +65,15 @@ public class UnityChatGPTAssistant : EditorWindow
         chatResponse.styleSheets.Add(AssistantStyleSheet);
         chatResponse.AddToClassList("chat-item");
         chatResponse.AddToClassList("chat-item-gpt");
+        chatResponse.selection.isSelectable = true;
         chatView.Add(chatResponse);
 
         Label tokenUsage = new($"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}");
         tokenUsage.styleSheets.Add(AssistantStyleSheet);
         tokenUsage.AddToClassList("chat-item");
         tokenUsage.AddToClassList("chat-item-gpt");
+        tokenUsage.AddToClassList("chat-item-statistics");
+        tokenUsage.selection.isSelectable = true;
         chatView.Add(tokenUsage);
     }
 }

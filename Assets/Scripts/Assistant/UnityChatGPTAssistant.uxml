@@ -9,16 +9,17 @@
         <ui:VisualElement name="tabContent">
             <ui:VisualElement name="ChatContent" class="grow-panel space-between-panel">
                 <ui:VisualElement name="SystemView" style="margin-top: 5px;">
-                    <ui:TextField picking-mode="Ignore" value="You are a helpful assistant giving short answer." multiline="true" name="SystemHelpInput" max-length="-1" />
+                    <ui:TextField picking-mode="Ignore" value="You&apos;re helpful assistant giving short answer" multiline="true" name="SystemHelpInput" max-length="-1" />
                 </ui:VisualElement>
                 <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="ChatView" class="grow-panel chat-view">
                     <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-user chat-item" style="display: none;" />
                     <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-gpt chat-item" style="display: none;" />
                     <ui:Label tabindex="-1" text="sdfgsdfg sgrg sdgdfsg sdgsdfg sd fgdfsg sdfgsdfg sdfgsdfgs dfds fgsdfg sdfg sdfgsdfg sdf gsfdsf sdf ssfsf df sdf sdfsd fsd fs fdss fsf sfsghgjhghjhjjhhjg asd asd a " display-tooltip-when-elided="true" name="Label" class="chat-item-user chat-item" style="display: none;" />
-                    <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item abc" style="display: none;" />
+                    <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item" style="display: none;" />
+                    <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item chat-item-statistics" style="display: none;" />
                 </ui:ScrollView>
                 <ui:VisualElement name="PromptView" class="prompt-view">
-                    <ui:TextField picking-mode="Ignore" value="Hello, could you help me with...?" multiline="true" name="PromptInput" max-length="-1" class="prompot-input" />
+                    <ui:TextField picking-mode="Ignore" value="Could you help me?" multiline="true" name="PromptInput" max-length="-1" class="prompot-input" />
                     <ui:Button text="send" display-tooltip-when-elided="true" name="SendButton" />
                 </ui:VisualElement>
             </ui:VisualElement>

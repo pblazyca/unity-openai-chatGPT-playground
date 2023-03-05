@@ -51,6 +51,20 @@
     padding-right: 4px;
 }
 
+.chat-item-statistics {
+    display: flex;
+    margin-top: 0.05px;
+    font-size: 12px;
+    margin-right: 0;
+    margin-left: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-bottom-left-radius: 8px;
+    -unity-font-style: italic;
+}
+
 .tab-item {
     flex-grow: 0;
     margin-left: 10px;
