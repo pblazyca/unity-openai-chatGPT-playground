@@ -13,6 +13,7 @@ public class UnityChatGPTAssistant : EditorWindow
     private StyleSheet AssistantStyleSheet { get; set; }
 
     private OpenAIClient OpenAI { get; set; }
+    private ChatArchive ChatArchive { get; set; } = new();
 
     [MenuItem("Tools/Chat GPT Assistant")]
     public static void ShowAssistant()
@@ -71,6 +72,8 @@ public class UnityChatGPTAssistant : EditorWindow
         userPrompt.selection.isSelectable = true;
         chatView.Add(userPrompt);
 
+        ChatArchive.SaveUserPrompt(prompt);
+
         ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
 
         Label chatResponse = new(result.FirstChoice.ToString());
@@ -79,6 +82,8 @@ public class UnityChatGPTAssistant : EditorWindow
         chatResponse.AddToClassList("chat-item-gpt");
         chatResponse.selection.isSelectable = true;
         chatView.Add(chatResponse);
+
+        ChatArchive.SaveUserPrompt(chatResponse.text);
 
         Label tokenUsage = new($"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}");
         tokenUsage.styleSheets.Add(AssistantStyleSheet);
