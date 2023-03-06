@@ -117,7 +117,7 @@ public class UnityChatGPTAssistant : EditorWindow
 
     private Label CreateChatResponseItem(string text)
     {
-        Label chatResponse = new(text);
+        Label chatResponse = new($"<mspace=0.45em>{text}");
         chatResponse.styleSheets.Add(AssistantStyleSheet);
         chatResponse.AddToClassList("chat-item");
         chatResponse.AddToClassList("chat-item-gpt");
