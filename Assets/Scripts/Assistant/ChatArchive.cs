@@ -102,14 +102,4 @@ public class ChatArchive
             return type.ToString() + " " + text;
         }
     }
-
-    private enum ChatItemType
-    {
-        NONE,
-        SYSTEM,
-        USER,
-        ASSISTANT,
-        CHAT,
-        STATISTICS
-    }
 }
