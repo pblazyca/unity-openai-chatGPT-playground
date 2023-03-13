@@ -95,16 +95,39 @@ public class UnityChatGPTAssistant : EditorWindow
         chatView.Add(CreateUserPromptItem(prompt));
         ChatArchive.SaveUserPrompt(prompt);
 
-        ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
+        //ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
 
-        chatView.Add(CreateChatResponseItem(result.FirstChoice.ToString()));
-        ChatArchive.SaveChatResponse(result.FirstChoice.ToString());
+        Label chatResponse = CreateChatResponseItem();
+        chatView.Add(chatResponse);
+        string stats = string.Empty;
 
-        string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
+        ChatResponse result = null;
+
+        await OpenAI.ChatEndpoint.StreamCompletionAsync(chatRequest, r =>
+        {
+            result = r;
+            chatResponse.text += result.FirstChoice;
+
+            //Debug.Log(result.FirstChoice);
+        });
+
+        stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
+
+        //await foreach (response in OpenAI.ChatEndpoint.StreamCompletionEnumerableAsync(chatRequest))
+        //{
+        //}
+
+        ChatArchive.SaveChatResponse(chatResponse.text);
         chatView.Add(CreateChatResponseStatisticsItem(stats));
+
+        //chatView.Add(CreateChatResponseItem(result.FirstChoice.ToString()));
+        //ChatArchive.SaveChatResponse(result.FirstChoice.ToString());
+
+        //string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
+        //chatView.Add(CreateChatResponseStatisticsItem(stats));
     }
 
-    private Label CreateUserPromptItem(string text)
+    private Label CreateUserPromptItem(string text = "")
     {
         Label userPrompt = new(text);
         userPrompt.styleSheets.Add(AssistantStyleSheet);
@@ -115,7 +138,7 @@ public class UnityChatGPTAssistant : EditorWindow
         return userPrompt;
     }
 
-    private Label CreateChatResponseItem(string text)
+    private Label CreateChatResponseItem(string text = "")
     {
         Label chatResponse = new($"<mspace=0.45em>{text}");
         chatResponse.styleSheets.Add(AssistantStyleSheet);
@@ -126,7 +149,7 @@ public class UnityChatGPTAssistant : EditorWindow
         return chatResponse;
     }
 
-    private Label CreateChatResponseStatisticsItem(string text)
+    private Label CreateChatResponseStatisticsItem(string text = "")
     {
         Label tokenUsage = new(text);
         tokenUsage.styleSheets.Add(AssistantStyleSheet);
