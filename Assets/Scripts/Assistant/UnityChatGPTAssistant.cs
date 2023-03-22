@@ -95,36 +95,13 @@ public class UnityChatGPTAssistant : EditorWindow
         chatView.Add(CreateUserPromptItem(prompt));
         ChatArchive.SaveUserPrompt(prompt);
 
-        //ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
+        ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
 
-        Label chatResponse = CreateChatResponseItem();
-        chatView.Add(chatResponse);
-        string stats = string.Empty;
+        chatView.Add(CreateChatResponseItem(result.FirstChoice.ToString()));
+        ChatArchive.SaveChatResponse(result.FirstChoice.ToString());
 
-        ChatResponse result = null;
-
-        await OpenAI.ChatEndpoint.StreamCompletionAsync(chatRequest, r =>
-        {
-            result = r;
-            chatResponse.text += result.FirstChoice;
-
-            //Debug.Log(result.FirstChoice);
-        });
-
-        stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
-
-        //await foreach (response in OpenAI.ChatEndpoint.StreamCompletionEnumerableAsync(chatRequest))
-        //{
-        //}
-
-        ChatArchive.SaveChatResponse(chatResponse.text);
+        string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
         chatView.Add(CreateChatResponseStatisticsItem(stats));
-
-        //chatView.Add(CreateChatResponseItem(result.FirstChoice.ToString()));
-        //ChatArchive.SaveChatResponse(result.FirstChoice.ToString());
-
-        //string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
-        //chatView.Add(CreateChatResponseStatisticsItem(stats));
     }
 
     private Label CreateUserPromptItem(string text = "")
@@ -159,5 +136,40 @@ public class UnityChatGPTAssistant : EditorWindow
         tokenUsage.selection.isSelectable = true;
 
         return tokenUsage;
+    }
+
+    //TODO: for future
+    private async void GenerateStreamAnswer ()
+    {
+        string prompt = rootVisualElement.Q<TextField>("PromptInput").value;
+        string systemHelpMessage = rootVisualElement.Q<TextField>("SystemHelpInput").value;
+        ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
+
+        List<ChatPrompt> chatPrompts = new()
+        {
+            new ("system", systemHelpMessage),
+            new ("user", prompt)
+        };
+
+        ChatRequest chatRequest = new(chatPrompts);
+        
+        Label chatResponse = CreateChatResponseItem();
+        chatView.Add(chatResponse);
+        string stats = string.Empty;
+
+        ChatResponse result = null;
+
+        await OpenAI.ChatEndpoint.StreamCompletionAsync(chatRequest, r =>
+        {
+            result = r;
+            chatResponse.text += result.FirstChoice;
+
+            //Debug.Log(result.FirstChoice);
+        });
+
+        stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
+        
+        ChatArchive.SaveChatResponse(chatResponse.text);
+        chatView.Add(CreateChatResponseStatisticsItem(stats));
     }
 }
