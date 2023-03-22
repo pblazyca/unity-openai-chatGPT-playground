@@ -8,7 +8,7 @@ using UnityEngine;
 public class ComoponentGenerator : MonoBehaviour
 {
     [field: SerializeField]
-    private string Prompt { get; set; }
+    private string Prompt { get; set; } = "Please write Player movement in 3d"
 
     [MenuItem(nameof(SendPrompt))]
     private async void SendPrompt()
@@ -16,7 +16,7 @@ public class ComoponentGenerator : MonoBehaviour
         List<ChatPrompt> chatPrompts = new()
         {
             new ("system", "You are Unity assistant, give only C# code answer without explanation. Use RequiredComponent if want to use GetComponent"),
-            new ("user", "Please write Player movement in 3d using new Input System")
+            new ("user", Prompt)
         };
 
         ChatRequest chatRequest = new(chatPrompts);
