@@ -60,3 +60,5 @@ sysinfo.txt
 crashlytics-build.properties
 
 Assets/.openai
+Assets/Scripts/Generated
+Assets/Scripts/Generated.meta
