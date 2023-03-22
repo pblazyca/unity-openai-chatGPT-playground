@@ -1,12 +1,9 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using OpenAI;
 using OpenAI.Chat;
-using Unity.EditorCoroutines.Editor;
 using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
 public class ComoponentGenerator : MonoBehaviour
@@ -52,7 +49,6 @@ public class ComoponentGenerator : MonoBehaviour
         output = (endCodeBlockIndex == -1) ? output : output.Substring(0, output.Length - (output.Length -endCodeBlockIndex));
         
         output = output.Replace("`","");
-        
         output = output.Substring(output.IndexOf("using"));
         
         int classBeginIndex = output.IndexOf(":", (output.IndexOf("class")));
@@ -68,7 +64,7 @@ public class ComoponentGenerator : MonoBehaviour
         EditorPrefs.SetBool("HasNew", true);
         Debug.Log("COMPONENT CONTENT");
         Debug.Log(content);
-        File.WriteAllText( $"{Application.dataPath}/Scripts/{NewTypeName}.cs", content);
+        File.WriteAllText( $"{Application.dataPath}/Scripts/Generated/{NewTypeName}.cs", content);
         EditorPrefs.SetString("Name", NewTypeName);
 
         AssetDatabase.Refresh();
@@ -77,18 +73,10 @@ public class ComoponentGenerator : MonoBehaviour
 
     private static void AddComponentNow ()
     {
-        Debug.Log("ab");
-
         Debug.Log(EditorPrefs.GetString("Name"));
-
-        //if(Should == false)
-          //  return;
-
-        //Should = false;
         
         Type savedType = GetType(        EditorPrefs.GetString("Name"));
         ObjectFactory.AddComponent(Selection.activeGameObject, savedType);
-        //gameObject.AddComponent (savedType);
         
         AssemblyReloadEvents.afterAssemblyReload -= AddComponentNow;
     }
