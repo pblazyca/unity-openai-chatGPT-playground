@@ -8,9 +8,9 @@ using UnityEngine;
 public class ComoponentGenerator : MonoBehaviour
 {
     [field: SerializeField]
-    private string Prompt { get; set; } = "Please write Player movement in 3d"
-
-    [MenuItem(nameof(SendPrompt))]
+    private string Prompt { get; set; } = "Please write Player movement in 3d";
+        
+    [ContextMenu(nameof(SendPrompt))]
     private async void SendPrompt()
     {
         List<ChatPrompt> chatPrompts = new()
@@ -33,6 +33,7 @@ public class ComoponentGenerator : MonoBehaviour
 
         string output = string.Empty;
         int startCodeBlockIndex = rawResponse.IndexOf("```");
+        Debug.Log(startCodeBlockIndex);
         return output;
     }
     
