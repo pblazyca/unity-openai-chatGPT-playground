@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using OpenAI;
 using OpenAI.Chat;
 using UnityEditor;
 using UnityEngine;
@@ -9,7 +10,15 @@ public class ComoponentGenerator : MonoBehaviour
 {
     [field: SerializeField]
     private string Prompt { get; set; } = "Please write Player movement in 3d";
-        
+
+    private OpenAIClient OpenAI { get; set; }
+
+    private void Awake ()
+    {
+        string configFilePath = $"{Application.dataPath}";
+        OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
+    }
+
     [ContextMenu(nameof(SendPrompt))]
     private async void SendPrompt()
     {
