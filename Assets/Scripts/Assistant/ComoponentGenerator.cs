@@ -13,15 +13,11 @@ public class ComoponentGenerator : MonoBehaviour
 
     private OpenAIClient OpenAI { get; set; }
 
-    private void Awake ()
-    {
-        string configFilePath = $"{Application.dataPath}";
-        OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
-    }
-
     [ContextMenu(nameof(SendPrompt))]
     private async void SendPrompt()
     {
+        Init();
+        
         List<ChatPrompt> chatPrompts = new()
         {
             new ("system", "You are Unity assistant, give only C# code answer without explanation. Use RequiredComponent if want to use GetComponent"),
@@ -51,5 +47,11 @@ public class ComoponentGenerator : MonoBehaviour
         Debug.Log("COMPONENT CONTENT");
         Debug.Log(content);
         //File.WriteAllText( $"{Application.dataPath}/Scripts", content);
+    }
+    
+    private void Init ()
+    {
+        string configFilePath = $"{Application.dataPath}";
+        OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
     }
 }
