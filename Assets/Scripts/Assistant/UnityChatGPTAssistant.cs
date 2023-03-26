@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 using OpenAI;
 using OpenAI.Chat;
@@ -44,6 +45,10 @@ public class UnityChatGPTAssistant : EditorWindow
             "You're helpful assistant giving step by step instruction",
             "You're helpful assistant listing action points from user prompt"
         };
+
+        rootVisualElement.Q<DropdownField>("ArchiveDropdown").choices = new List<string>(ChatArchive.LoadFiles().Select(_ => _.Item1).ToList());
+        rootVisualElement.Q<DropdownField>("ArchiveDropdown").index = 0;
+        //rootVisualElement.Q<DropdownField>("ArchiveDropdown").RegisterValueChangedCallback((e) => );
 
         rootVisualElement.Q<DropdownField>("SystemHelpDropdown").index = 0;
         rootVisualElement.Q<DropdownField>("SystemHelpDropdown").RegisterValueChangedCallback((e) => rootVisualElement.Q<TextField>("SystemHelpInput").value = rootVisualElement.Q<DropdownField>("SystemHelpDropdown").value);
@@ -139,7 +144,7 @@ public class UnityChatGPTAssistant : EditorWindow
     }
 
     //TODO: for future
-    private async void GenerateStreamAnswer ()
+    private async void GenerateStreamAnswer()
     {
         string prompt = rootVisualElement.Q<TextField>("PromptInput").value;
         string systemHelpMessage = rootVisualElement.Q<TextField>("SystemHelpInput").value;
@@ -152,7 +157,7 @@ public class UnityChatGPTAssistant : EditorWindow
         };
 
         ChatRequest chatRequest = new(chatPrompts);
-        
+
         Label chatResponse = CreateChatResponseItem();
         chatView.Add(chatResponse);
         string stats = string.Empty;
@@ -168,7 +173,7 @@ public class UnityChatGPTAssistant : EditorWindow
         });
 
         stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
-        
+
         ChatArchive.SaveChatResponse(chatResponse.text);
         chatView.Add(CreateChatResponseStatisticsItem(stats));
     }
