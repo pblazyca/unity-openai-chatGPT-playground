@@ -87,6 +87,7 @@ public class UnityChatGPTAssistant : EditorWindow
     {
         ScrollView archiveView = rootVisualElement.Q<ScrollView>("ArchiveView");
         archiveView.Clear();
+
         foreach (var item in ChatArchive.LoadConversation(rootVisualElement.Q<DropdownField>("ArchiveDropdown").value))
         {
             archiveView.Add(CreateUserPromptItem(item.prompt));

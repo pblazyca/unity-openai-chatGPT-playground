@@ -22,7 +22,7 @@ public class ComoponentGenerator : MonoBehaviour
 
         Debug.Log("SEND PROMPT STARTED");
         Init();
-        
+
         List<ChatPrompt> chatPrompts = new()
         {
             new ("system", "You are Unity assistant, give only C# code answer without explanation. Use RequiredComponent if want to use GetComponent."),
@@ -31,12 +31,12 @@ public class ComoponentGenerator : MonoBehaviour
 
         ChatRequest chatRequest = new(chatPrompts);
         ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
-        
+
         string componentContent = ParseChatResponse(result.FirstChoice.ToString());
         SaveComponent(componentContent);
     }
 
-    private string ParseChatResponse (string rawResponse)
+    private string ParseChatResponse(string rawResponse)
     {
         Debug.Log("RAW RESPONSE");
         Debug.Log(rawResponse);
@@ -44,13 +44,13 @@ public class ComoponentGenerator : MonoBehaviour
         string output = rawResponse;
         int startCodeBlockIndex = output.IndexOf("```");
         output = (startCodeBlockIndex == -1) ? output : output.Substring(startCodeBlockIndex) + 3;
-        
+
         int endCodeBlockIndex = output.LastIndexOf("```");
-        output = (endCodeBlockIndex == -1) ? output : output.Substring(0, output.Length - (output.Length -endCodeBlockIndex));
-        
-        output = output.Replace("`","");
+        output = (endCodeBlockIndex == -1) ? output : output.Substring(0, output.Length - (output.Length - endCodeBlockIndex));
+
+        output = output.Replace("`", "");
         output = output.Substring(output.IndexOf("using"));
-        
+
         int classBeginIndex = output.IndexOf(":", (output.IndexOf("class")));
         int length = classBeginIndex - (output.IndexOf("class") + 5);
         NewTypeName = output.Substring(output.IndexOf("class") + 5, length);
@@ -59,32 +59,36 @@ public class ComoponentGenerator : MonoBehaviour
         return output;
     }
 
-    private void SaveComponent (string content)
+    private void SaveComponent(string content)
     {
         EditorPrefs.SetBool("HasNew", true);
         Debug.Log("COMPONENT CONTENT");
         Debug.Log(content);
-        File.WriteAllText( $"{Application.dataPath}/Scripts/Generated/{NewTypeName}.cs", content);
+        File.WriteAllText($"{Application.dataPath}/Scripts/Generated/{NewTypeName}.cs", content);
         EditorPrefs.SetString("Name", NewTypeName);
 
         AssetDatabase.Refresh();
         EditorUtility.RequestScriptReload();
     }
 
-    private static void AddComponentNow ()
+    private static void AddComponentNow()
     {
         Debug.Log(EditorPrefs.GetString("Name"));
-        
-        Type savedType = GetType(        EditorPrefs.GetString("Name"));
+
+        Type savedType = GetType(EditorPrefs.GetString("Name"));
         ObjectFactory.AddComponent(Selection.activeGameObject, savedType);
-        
+
         AssemblyReloadEvents.afterAssemblyReload -= AddComponentNow;
     }
-    
-    private  static  Type GetType(string typeName) {
-        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies()) {
-            foreach (Type type in assembly.GetTypes()) {
-                if (type.LastPartOfTypeName() == typeName) {
+
+    private static Type GetType(string typeName)
+    {
+        foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
+        {
+            foreach (Type type in assembly.GetTypes())
+            {
+                if (type.LastPartOfTypeName() == typeName)
+                {
                     return type;
                 }
             }
@@ -92,16 +96,16 @@ public class ComoponentGenerator : MonoBehaviour
         return null;
     }
 
-    private void Init ()
+    private void Init()
     {
         string configFilePath = $"{Application.dataPath}";
         OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
     }
-    
+
     [InitializeOnLoadMethod]
     private static void OnInitialized()
     {
-        if(EditorPrefs.GetBool("HasNew"))
+        if (EditorPrefs.GetBool("HasNew"))
         {
             EditorPrefs.DeleteKey("HasNew");
             AssemblyReloadEvents.afterAssemblyReload += AddComponentNow;
