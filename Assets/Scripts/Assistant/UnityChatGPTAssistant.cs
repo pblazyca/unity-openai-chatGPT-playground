@@ -36,9 +36,6 @@ public class UnityChatGPTAssistant : EditorWindow
 
     private void Initialize()
     {
-        string configFilePath = $"{Application.dataPath}";
-        OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
-
         rootVisualElement.Q<DropdownField>("SystemHelpDropdown").choices = new()
         {
             "You're helpful assistant giving short answer",
@@ -128,7 +125,7 @@ public class UnityChatGPTAssistant : EditorWindow
 
     private Label CreateChatResponseItem(string text = "")
     {
-        Label chatResponse = new($"<mspace=0.45em>{text}");
+        Label chatResponse = new(text);
         chatResponse.styleSheets.Add(AssistantStyleSheet);
         chatResponse.AddToClassList("chat-item");
         chatResponse.AddToClassList("chat-item-gpt");

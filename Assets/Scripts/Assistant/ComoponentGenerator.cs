@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using OpenAI;
 using OpenAI.Chat;
 using UnityEditor;
 using UnityEngine;
@@ -11,26 +9,20 @@ public class ComoponentGenerator : MonoBehaviour
     [field: SerializeField]
     private string Prompt { get; set; } = "Please write Player movement in 3d";
 
-    private OpenAIClient OpenAI { get; set; }
     private string NewTypeName { get; set; }
     private bool Should { get; set; }
+    private ChatAssistant ChatAssistant { get; set; }
 
     [ContextMenu(nameof(SendPrompt))]
     private async void SendPrompt()
     {
+        ChatAssistant = new();
         Should = true;
 
         Debug.Log("SEND PROMPT STARTED");
-        Init();
 
-        List<ChatPrompt> chatPrompts = new()
-        {
-            new ("system", "You are Unity assistant, give only C# code answer without explanation. Use RequiredComponent if want to use GetComponent."),
-            new ("user", Prompt)
-        };
-
-        ChatRequest chatRequest = new(chatPrompts);
-        ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
+        string systemHelpMessage = "You are Unity assistant, give only C# code answer without explanation. Use RequiredComponent if want to use GetComponent.";
+        ChatResponse result = await ChatAssistant.SendPrompt(systemHelpMessage, Prompt);
 
         string componentContent = ParseChatResponse(result.FirstChoice.ToString());
         SaveComponent(componentContent);
@@ -94,12 +86,6 @@ public class ComoponentGenerator : MonoBehaviour
             }
         }
         return null;
-    }
-
-    private void Init()
-    {
-        string configFilePath = $"{Application.dataPath}";
-        OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
     }
 
     [InitializeOnLoadMethod]
