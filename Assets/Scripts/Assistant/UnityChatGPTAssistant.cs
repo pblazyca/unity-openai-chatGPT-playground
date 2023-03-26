@@ -14,6 +14,7 @@ public class UnityChatGPTAssistant : EditorWindow
     private StyleSheet AssistantStyleSheet { get; set; }
 
     private OpenAIClient OpenAI { get; set; }
+    private ChatAssistant ChatAssistant { get; set; }
     private ChatArchive ChatArchive { get; set; } = new();
 
     [MenuItem("Tools/Chat GPT Assistant")]
@@ -29,6 +30,7 @@ public class UnityChatGPTAssistant : EditorWindow
         root.AddToClassList("root-panel");
         rootVisualElement.Add(root);
 
+        ChatAssistant = new();
         Initialize();
     }
 
@@ -101,18 +103,10 @@ public class UnityChatGPTAssistant : EditorWindow
         string systemHelpMessage = rootVisualElement.Q<TextField>("SystemHelpInput").value;
         ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
 
-        List<ChatPrompt> chatPrompts = new()
-        {
-            new ("system", systemHelpMessage),
-            new ("user", prompt)
-        };
-
-        ChatRequest chatRequest = new(chatPrompts);
-
         chatView.Add(CreateUserPromptItem(prompt));
         ChatArchive.SaveUserPrompt(prompt);
 
-        ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
+        ChatResponse result = await ChatAssistant.SendPrompt(systemHelpMessage, prompt);
 
         chatView.Add(CreateChatResponseItem(result.FirstChoice.ToString()));
         ChatArchive.SaveChatResponse(result.FirstChoice.ToString());
