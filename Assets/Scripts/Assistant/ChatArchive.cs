@@ -62,6 +62,34 @@ public class ChatArchive
         return dataCollection;
     }
 
+    public List<(string prompt, string response)> LoadConversation(string fileName)
+    {
+        string filePath = Application.persistentDataPath + "/" + fileName;
+
+        if (File.Exists(filePath) == true)
+        {
+            Data = JsonConvert.DeserializeObject<ArchiveData>(File.ReadAllText(filePath));
+            List<(string, string)> dataCollection = new();
+
+            for (int i = 0; i < Data.ChatSaveDataCollection.Count; i++)
+            {
+                (string, string) dataItem = new();
+
+                if (Data.ChatSaveDataCollection[i].type == ChatItemType.USER)
+                {
+                    dataItem.Item1 = Data.ChatSaveDataCollection[i].text;
+                    dataItem.Item2 = Data.ChatSaveDataCollection[i + 1].text;
+
+                    dataCollection.Add(dataItem);
+                }
+            }
+
+            return dataCollection;
+        }
+
+        return null;
+    }
+
     public void SaveChatResponse(string response)
     {
         ChatSaveData saveData = new(DateTime.Now.Ticks, ChatItemType.CHAT, response);

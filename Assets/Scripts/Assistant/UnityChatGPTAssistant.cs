@@ -47,8 +47,8 @@ public class UnityChatGPTAssistant : EditorWindow
         };
 
         rootVisualElement.Q<DropdownField>("ArchiveDropdown").choices = new List<string>(ChatArchive.LoadFiles().Select(_ => _.Item1).ToList());
+        rootVisualElement.Q<DropdownField>("ArchiveDropdown").RegisterValueChangedCallback((e) => LoadArchive());
         rootVisualElement.Q<DropdownField>("ArchiveDropdown").index = 0;
-        //rootVisualElement.Q<DropdownField>("ArchiveDropdown").RegisterValueChangedCallback((e) => );
 
         rootVisualElement.Q<DropdownField>("SystemHelpDropdown").index = 0;
         rootVisualElement.Q<DropdownField>("SystemHelpDropdown").RegisterValueChangedCallback((e) => rootVisualElement.Q<TextField>("SystemHelpInput").value = rootVisualElement.Q<DropdownField>("SystemHelpDropdown").value);
@@ -81,6 +81,17 @@ public class UnityChatGPTAssistant : EditorWindow
         }
 
         rootVisualElement.Q<Button>("SendButton").clicked += SendPrompt;
+    }
+
+    private void LoadArchive()
+    {
+        ScrollView archiveView = rootVisualElement.Q<ScrollView>("ArchiveView");
+        archiveView.Clear();
+        foreach (var item in ChatArchive.LoadConversation(rootVisualElement.Q<DropdownField>("ArchiveDropdown").value))
+        {
+            archiveView.Add(CreateUserPromptItem(item.prompt));
+            archiveView.Add(CreateChatResponseItem(item.response));
+        }
     }
 
     private async void SendPrompt()
