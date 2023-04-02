@@ -11,4 +11,9 @@ public static class Extensions
         string typeNameLast = typeNameFull?[typeNameFull.Length - 1];
         return typeNameLast;
     }
+
+    public static string ToLower(this Enum target)
+    {
+        return target.ToString().ToLower();
+    }
 }
