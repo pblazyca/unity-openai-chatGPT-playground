@@ -10,19 +10,28 @@ static class AssistantInInspector
         Editor.finishedDefaultHeaderGUI += DisplayChatGPTAssistant;
     }
 
-    static void DisplayChatGPTAssistant(Editor editor)
+    private static void DisplayChatGPTAssistant(Editor editor)
     {
-        Type foundEditorType = Type.GetType("UnityEditor.GameObjectInspector, UnityEditor");
-
         GUILayout.Space(10);
         GUILayout.Label("Unity ChatGTP Assistant", EditorStyles.whiteLargeLabel);
 
+        PrepareOpenAssistantButton();
+        PrepareGenerateButton(editor.GetType());
+    }
+
+    private static void PrepareOpenAssistantButton()
+    {
         if (GUILayout.Button("Open Chat"))
         {
-            EditorWindow wnd = EditorWindow.GetWindow<UnityChatGPTAssistant>();
+            EditorWindow window = EditorWindow.GetWindow<UnityChatGPTAssistant>();
         }
+    }
 
-        if (editor.GetType() == foundEditorType && GUILayout.Button("Generate Component"))
+    private static void PrepareGenerateButton(Type editorType)
+    {
+        Type foundEditorType = Type.GetType("UnityEditor.GameObjectInspector, UnityEditor");
+
+        if (editorType == foundEditorType && GUILayout.Button("Generate Component"))
         {
             Debug.Log("Generate Component");
         }
