@@ -23,7 +23,7 @@ static class AssistantInInspector
     {
         if (GUILayout.Button("Open Chat"))
         {
-            EditorWindow window = EditorWindow.GetWindow<UnityChatGPTAssistant>();
+            EditorWindow window = EditorWindow.GetWindow<ChatAssistantHome>();
         }
     }
 

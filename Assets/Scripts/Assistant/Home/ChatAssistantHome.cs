@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class UnityChatGPTAssistant : EditorWindow
+public class ChatAssistantHome : EditorWindow
 {
     [field: SerializeField]
     private VisualTreeAsset VisualTreeAsset { get; set; }
@@ -21,7 +21,7 @@ public class UnityChatGPTAssistant : EditorWindow
     [MenuItem("Tools/Chat GPT Assistant")]
     public static void ShowAssistant()
     {
-        UnityChatGPTAssistant window = GetWindow<UnityChatGPTAssistant>();
+        ChatAssistantHome window = GetWindow<ChatAssistantHome>();
         window.titleContent = new("Chat GPT Assistant");
     }
 
