@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using OpenAI;
@@ -14,18 +13,18 @@ public class ChatAssistant
         Init();
     }
 
-    public async Task<ChatResponse> SendPrompt(string systemHelpInfo, string prompt)
+    public async Task<ChatResponse> SendPrompt(string systemInfo, string prompt)
     {
-        List<ChatPrompt> chatPrompts = new()
+        List<ChatPrompt> prompts = new()
         {
-            new (ChatItemType.SYSTEM.ToLower(), systemHelpInfo),
+            new (ChatItemType.SYSTEM.ToLower(), systemInfo),
             new (ChatItemType.USER.ToLower(), prompt)
         };
 
-        ChatRequest chatRequest = new(chatPrompts);
-        ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
+        ChatRequest request = new(prompts);
+        ChatResponse response = await OpenAI.ChatEndpoint.GetCompletionAsync(request);
 
-        return result;
+        return response;
     }
 
     private void Init()
