@@ -5,130 +5,134 @@ using OpenAI.Chat;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using InditeHappiness.LLM.Archive;
 
-public class ChatAssistantHome : EditorWindow
+namespace InditeHappiness.LLM.Assistant
 {
-    [field: SerializeField]
-    private VisualTreeAsset VisualTreeAsset { get; set; }
-    [field: SerializeField]
-    private StyleSheet AssistantStyleSheet { get; set; }
-
-    private OpenAIClient OpenAI { get; set; }
-    private ChatAssistant ChatAssistant { get; set; }
-    private ChatArchive ChatArchive { get; set; } = new();
-    private ChatItemFactory ItemFactory { get; set; }
-
-    [MenuItem("Tools/Chat GPT Assistant")]
-    public static void ShowAssistant()
+    public class ChatAssistantHome : EditorWindow
     {
-        ChatAssistantHome window = GetWindow<ChatAssistantHome>();
-        window.titleContent = new("Chat GPT Assistant");
-    }
+        [field: SerializeField]
+        private VisualTreeAsset VisualTreeAsset { get; set; }
+        [field: SerializeField]
+        private StyleSheet AssistantStyleSheet { get; set; }
 
-    public void CreateGUI()
-    {
-        Init();
-        PrepareInterface();
-    }
+        private OpenAIClient OpenAI { get; set; }
+        private ChatAssistant ChatAssistant { get; set; }
+        private ChatArchive ChatArchive { get; set; } = new();
+        private ChatItemFactory ItemFactory { get; set; }
 
-    private void Init()
-    {
-        VisualElement root = VisualTreeAsset.Instantiate();
-        root.AddToClassList("root-panel");
-        rootVisualElement.Add(root);
-
-        ChatAssistant = new();
-        ItemFactory = new(AssistantStyleSheet);
-    }
-
-    private void PrepareInterface()
-    {
-        ArchivePanel archivePanel = new(rootVisualElement, AssistantStyleSheet);
-        archivePanel.Init();
-
-        rootVisualElement.Q<DropdownField>("SystemHelpDropdown").index = 0;
-        rootVisualElement.Q<DropdownField>("SystemHelpDropdown").RegisterValueChangedCallback((e) => rootVisualElement.Q<TextField>("SystemHelpInput").value = rootVisualElement.Q<DropdownField>("SystemHelpDropdown").value);
-
-        rootVisualElement.Q<Label>("ArchiveTab").RegisterCallback<MouseDownEvent>((e) =>
+        [MenuItem("Tools/Chat GPT Assistant")]
+        public static void ShowAssistant()
         {
-            rootVisualElement.Q<Label>("ChatTab").RemoveFromClassList("tab-item-selected");
-            rootVisualElement.Q<Label>("ArchiveTab").AddToClassList("tab-item-selected");
-            rootVisualElement.Q<VisualElement>("ArchiveContent").style.display = DisplayStyle.Flex;
-            rootVisualElement.Q<VisualElement>("ChatContent").style.display = DisplayStyle.None;
-        });
-
-        rootVisualElement.Q<Label>("ChatTab").RegisterCallback<MouseDownEvent>((e) =>
-        {
-            rootVisualElement.Q<Label>("ArchiveTab").RemoveFromClassList("tab-item-selected");
-            rootVisualElement.Q<Label>("ChatTab").AddToClassList("tab-item-selected");
-            rootVisualElement.Q<VisualElement>("ChatContent").style.display = DisplayStyle.Flex;
-            rootVisualElement.Q<VisualElement>("ArchiveContent").style.display = DisplayStyle.None;
-        });
-
-        ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
-
-        if (ChatArchive.LoadConversation() != null)
-        {
-            foreach (var item in ChatArchive.LoadConversation())
-            {
-                chatView.Add(ItemFactory.CreateUserPromptItem(item.prompt));
-                chatView.Add(ItemFactory.CreateChatResponseItem(item.response));
-            }
+            ChatAssistantHome window = GetWindow<ChatAssistantHome>();
+            window.titleContent = new("Chat GPT Assistant");
         }
 
-        rootVisualElement.Q<Button>("SendButton").clicked += SendPrompt;
-    }
+        public void CreateGUI()
+        {
+            Init();
+            PrepareInterface();
+        }
 
-    private async void SendPrompt()
-    {
-        string prompt = rootVisualElement.Q<TextField>("PromptInput").value;
-        string systemHelpMessage = rootVisualElement.Q<TextField>("SystemHelpInput").value;
-        ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
+        private void Init()
+        {
+            VisualElement root = VisualTreeAsset.Instantiate();
+            root.AddToClassList("root-panel");
+            rootVisualElement.Add(root);
 
-        chatView.Add(ItemFactory.CreateUserPromptItem(prompt));
-        ChatArchive.SaveUserPrompt(prompt);
+            ChatAssistant = new();
+            ItemFactory = new(AssistantStyleSheet);
+        }
 
-        ChatResponse result = await ChatAssistant.SendPrompt(systemHelpMessage, prompt);
+        private void PrepareInterface()
+        {
+            ArchivePanel archivePanel = new(rootVisualElement, AssistantStyleSheet);
+            archivePanel.Init();
 
-        chatView.Add(ItemFactory.CreateChatResponseItem(result.FirstChoice.ToString()));
-        ChatArchive.SaveChatResponse(result.FirstChoice.ToString());
+            rootVisualElement.Q<DropdownField>("SystemHelpDropdown").index = 0;
+            rootVisualElement.Q<DropdownField>("SystemHelpDropdown").RegisterValueChangedCallback((e) => rootVisualElement.Q<TextField>("SystemHelpInput").value = rootVisualElement.Q<DropdownField>("SystemHelpDropdown").value);
 
-        string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
-        chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
-    }
+            rootVisualElement.Q<Label>("ArchiveTab").RegisterCallback<MouseDownEvent>((e) =>
+            {
+                rootVisualElement.Q<Label>("ChatTab").RemoveFromClassList("tab-item-selected");
+                rootVisualElement.Q<Label>("ArchiveTab").AddToClassList("tab-item-selected");
+                rootVisualElement.Q<VisualElement>("ArchiveContent").style.display = DisplayStyle.Flex;
+                rootVisualElement.Q<VisualElement>("ChatContent").style.display = DisplayStyle.None;
+            });
 
-    //TODO: for future
-    private async void GenerateStreamAnswer()
-    {
-        string prompt = rootVisualElement.Q<TextField>("PromptInput").value;
-        string systemHelpMessage = rootVisualElement.Q<TextField>("SystemHelpInput").value;
-        ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
+            rootVisualElement.Q<Label>("ChatTab").RegisterCallback<MouseDownEvent>((e) =>
+            {
+                rootVisualElement.Q<Label>("ArchiveTab").RemoveFromClassList("tab-item-selected");
+                rootVisualElement.Q<Label>("ChatTab").AddToClassList("tab-item-selected");
+                rootVisualElement.Q<VisualElement>("ChatContent").style.display = DisplayStyle.Flex;
+                rootVisualElement.Q<VisualElement>("ArchiveContent").style.display = DisplayStyle.None;
+            });
 
-        List<ChatPrompt> chatPrompts = new()
+            ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
+
+            if (ChatArchive.LoadConversation() != null)
+            {
+                foreach (var item in ChatArchive.LoadConversation())
+                {
+                    chatView.Add(ItemFactory.CreateUserPromptItem(item.prompt));
+                    chatView.Add(ItemFactory.CreateChatResponseItem(item.response));
+                }
+            }
+
+            rootVisualElement.Q<Button>("SendButton").clicked += SendPrompt;
+        }
+
+        private async void SendPrompt()
+        {
+            string prompt = rootVisualElement.Q<TextField>("PromptInput").value;
+            string systemHelpMessage = rootVisualElement.Q<TextField>("SystemHelpInput").value;
+            ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
+
+            chatView.Add(ItemFactory.CreateUserPromptItem(prompt));
+            ChatArchive.SaveUserPrompt(prompt);
+
+            ChatResponse result = await ChatAssistant.SendPrompt(systemHelpMessage, prompt);
+
+            chatView.Add(ItemFactory.CreateChatResponseItem(result.FirstChoice.ToString()));
+            ChatArchive.SaveChatResponse(result.FirstChoice.ToString());
+
+            string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
+            chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
+        }
+
+        //TODO: for future
+        private async void GenerateStreamAnswer()
+        {
+            string prompt = rootVisualElement.Q<TextField>("PromptInput").value;
+            string systemHelpMessage = rootVisualElement.Q<TextField>("SystemHelpInput").value;
+            ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
+
+            List<ChatPrompt> chatPrompts = new()
         {
             new ("system", systemHelpMessage),
             new ("user", prompt)
         };
 
-        ChatRequest chatRequest = new(chatPrompts);
+            ChatRequest chatRequest = new(chatPrompts);
 
-        Label chatResponse = ItemFactory.CreateChatResponseItem();
-        chatView.Add(chatResponse);
-        string stats = string.Empty;
+            Label chatResponse = ItemFactory.CreateChatResponseItem();
+            chatView.Add(chatResponse);
+            string stats = string.Empty;
 
-        ChatResponse result = null;
+            ChatResponse result = null;
 
-        await OpenAI.ChatEndpoint.StreamCompletionAsync(chatRequest, r =>
-        {
-            result = r;
-            chatResponse.text += result.FirstChoice;
+            await OpenAI.ChatEndpoint.StreamCompletionAsync(chatRequest, r =>
+            {
+                result = r;
+                chatResponse.text += result.FirstChoice;
 
-            //Debug.Log(result.FirstChoice);
-        });
+                //Debug.Log(result.FirstChoice);
+            });
 
-        stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
+            stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
 
-        ChatArchive.SaveChatResponse(chatResponse.text);
-        chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
+            ChatArchive.SaveChatResponse(chatResponse.text);
+            chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
+        }
     }
 }

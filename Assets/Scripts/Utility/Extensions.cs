@@ -1,16 +1,19 @@
 using System;
 
-public static class Extensions
+namespace InditeHappiness.LLM
 {
-    public static string LastPartOfTypeName(this Type type)
+    public static class Extensions
     {
-        string[] typeNameFull = type.FullName?.Split('.');
-        string typeNameLast = typeNameFull?[typeNameFull.Length - 1];
-        return typeNameLast;
-    }
+        public static string LastPartOfTypeName(this Type type)
+        {
+            string[] typeNameFull = type.FullName?.Split('.');
+            string typeNameLast = typeNameFull?[typeNameFull.Length - 1];
+            return typeNameLast;
+        }
 
-    public static string ToLower(this Enum target)
-    {
-        return target.ToString().ToLower();
+        public static string ToLower(this Enum target)
+        {
+            return target.ToString().ToLower();
+        }
     }
 }

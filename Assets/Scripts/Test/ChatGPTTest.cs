@@ -5,33 +5,35 @@ using OpenAI.Chat;
 using OpenAI.Models;
 using UnityEngine;
 
-public class ChatGPTTest : MonoBehaviour
+namespace InditeHappiness.LLM.Samples
 {
-    private OpenAIClient OpenAI { get; set; }
-
-    protected virtual void Start()
+    public class ChatGPTTest : MonoBehaviour
     {
-        string configFilePath = $"{Application.dataPath}";
-        OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
+        private OpenAIClient OpenAI { get; set; }
 
-        PrintAllOpenAIModels();
-        PrintFirstAnswer();
-    }
-
-    private async void PrintAllOpenAIModels()
-    {
-        Debug.Log("Official OpenAI Docs: https://platform.openai.com/docs/models");
-        var models = await OpenAI.ModelsEndpoint.GetModelsAsync();
-
-        foreach (Model model in models)
+        protected virtual void Start()
         {
-            Debug.Log(model.ToString());
-        }
-    }
+            string configFilePath = $"{Application.dataPath}";
+            OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
 
-    private async void PrintFirstAnswer()
-    {
-        List<ChatPrompt> chatPrompts = new()
+            PrintAllOpenAIModels();
+            PrintFirstAnswer();
+        }
+
+        private async void PrintAllOpenAIModels()
+        {
+            Debug.Log("Official OpenAI Docs: https://platform.openai.com/docs/models");
+            var models = await OpenAI.ModelsEndpoint.GetModelsAsync();
+
+            foreach (Model model in models)
+            {
+                Debug.Log(model.ToString());
+            }
+        }
+
+        private async void PrintFirstAnswer()
+        {
+            List<ChatPrompt> chatPrompts = new()
         {
             new ("system", "You are a helpful assistant."),
             new ("user", "Who won the world series in 2020?"),
@@ -39,14 +41,15 @@ public class ChatGPTTest : MonoBehaviour
             new ("user", "Where was it played?"),
         };
 
-        ChatRequest chatRequest = new(chatPrompts);
-        ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
-        Debug.Log(result.FirstChoice);
-        Debug.Log(result.Usage.TotalTokens);
+            ChatRequest chatRequest = new(chatPrompts);
+            ChatResponse result = await OpenAI.ChatEndpoint.GetCompletionAsync(chatRequest);
+            Debug.Log(result.FirstChoice);
+            Debug.Log(result.Usage.TotalTokens);
 
-        foreach (var item in result.Choices)
-        {
-            Debug.Log(item);
+            foreach (var item in result.Choices)
+            {
+                Debug.Log(item);
+            }
         }
     }
 }

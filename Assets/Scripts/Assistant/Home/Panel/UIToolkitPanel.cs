@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public abstract class UIToolkitPanel
+namespace InditeHappiness.LLM.Assistant
 {
-    protected VisualElement Root { get; set; }
-    protected ChatItemFactory ItemFactory { get; set; }
-
-    public UIToolkitPanel(VisualElement root, StyleSheet styleSheet)
+    public abstract class UIToolkitPanel
     {
-        Root = root;
-        ItemFactory = new(styleSheet);
-    }
+        protected VisualElement Root { get; set; }
+        protected ChatItemFactory ItemFactory { get; set; }
 
-    public abstract void Init();
+        public UIToolkitPanel(VisualElement root, StyleSheet styleSheet)
+        {
+            Root = root;
+            ItemFactory = new(styleSheet);
+        }
+
+        public abstract void Init();
+    }
 }

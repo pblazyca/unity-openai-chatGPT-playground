@@ -4,32 +4,35 @@ using OpenAI;
 using OpenAI.Chat;
 using UnityEngine;
 
-public class ChatAssistant
+namespace InditeHappiness.LLM.Assistant
 {
-    private OpenAIClient OpenAI { get; set; }
-
-    public ChatAssistant()
+    public class ChatAssistant
     {
-        Init();
-    }
+        private OpenAIClient OpenAI { get; set; }
 
-    public async Task<ChatResponse> SendPrompt(string systemInfo, string prompt)
-    {
-        List<ChatPrompt> prompts = new()
+        public ChatAssistant()
+        {
+            Init();
+        }
+
+        public async Task<ChatResponse> SendPrompt(string systemInfo, string prompt)
+        {
+            List<ChatPrompt> prompts = new()
         {
             new (ChatItemType.SYSTEM.ToLower(), systemInfo),
             new (ChatItemType.USER.ToLower(), prompt)
         };
 
-        ChatRequest request = new(prompts);
-        ChatResponse response = await OpenAI.ChatEndpoint.GetCompletionAsync(request);
+            ChatRequest request = new(prompts);
+            ChatResponse response = await OpenAI.ChatEndpoint.GetCompletionAsync(request);
 
-        return response;
-    }
+            return response;
+        }
 
-    private void Init()
-    {
-        string configFilePath = Application.dataPath;
-        OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
+        private void Init()
+        {
+            string configFilePath = Application.dataPath;
+            OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
+        }
     }
 }

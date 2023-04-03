@@ -1,6 +1,6 @@
 {
     "name": "com.pbindite.openai-unity-assistant",
-    "rootNamespace": "InditeHappiness.LLMAssistant",
+    "rootNamespace": "InditeHappiness.LLM",
     "references": [
         "GUID:3248779d86bd31747b5d2214f30b01ac",
         "GUID:59ce8382c0e5ff643937282e42c072e3"

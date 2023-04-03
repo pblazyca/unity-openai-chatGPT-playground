@@ -1,9 +1,12 @@
-public enum ChatItemType
+namespace InditeHappiness.LLM
 {
-    NONE,
-    SYSTEM,
-    USER,
-    ASSISTANT,
-    CHAT,
-    STATISTICS
+    public enum ChatItemType
+    {
+        NONE,
+        SYSTEM,
+        USER,
+        ASSISTANT,
+        CHAT,
+        STATISTICS
+    }
 }
