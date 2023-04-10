@@ -107,10 +107,10 @@ namespace InditeHappiness.LLM.Assistant
             string systemHelpMessage = rootVisualElement.Q<TextField>("SystemHelpInput").value;
             ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
 
-            List<ChatPrompt> chatPrompts = new()
+            List<Message> chatPrompts = new()
         {
-            new ("system", systemHelpMessage),
-            new ("user", prompt)
+            new (Role.System, systemHelpMessage),
+            new (Role.User, prompt)
         };
 
             ChatRequest chatRequest = new(chatPrompts);

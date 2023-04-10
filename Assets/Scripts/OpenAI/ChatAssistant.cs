@@ -17,10 +17,10 @@ namespace InditeHappiness.LLM.Assistant
 
         public async Task<ChatResponse> SendPrompt(string systemInfo, string prompt)
         {
-            List<ChatPrompt> prompts = new()
+            List<Message> prompts = new()
         {
-            new (ChatItemType.SYSTEM.ToLower(), systemInfo),
-            new (ChatItemType.USER.ToLower(), prompt)
+            new (Role.System, systemInfo),
+            new (Role.User, prompt)
         };
 
             ChatRequest request = new(prompts);

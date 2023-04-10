@@ -33,12 +33,12 @@ namespace InditeHappiness.LLM.Samples
 
         private async void PrintFirstAnswer()
         {
-            List<ChatPrompt> chatPrompts = new()
+            List<Message> chatPrompts = new()
         {
-            new ("system", "You are a helpful assistant."),
-            new ("user", "Who won the world series in 2020?"),
-            new ("assistant", "The Los Angeles Dodgers won the World Series in 2020."),
-            new ("user", "Where was it played?"),
+            new (Role.System, "You are a helpful assistant."),
+            new (Role.User, "Who won the world series in 2020?"),
+            new (Role.Assistant, "The Los Angeles Dodgers won the World Series in 2020."),
+            new (Role.User, "Where was it played?"),
         };
 
             ChatRequest chatRequest = new(chatPrompts);
