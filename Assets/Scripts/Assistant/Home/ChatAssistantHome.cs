@@ -49,9 +49,6 @@ namespace InditeHappiness.LLM.Assistant
             ArchivePanel archivePanel = new(rootVisualElement, AssistantStyleSheet);
             ChatPanel chatPanel = new(rootVisualElement, AssistantStyleSheet);
 
-            rootVisualElement.Q<DropdownField>("SystemHelpDropdown").index = 0;
-            rootVisualElement.Q<DropdownField>("SystemHelpDropdown").RegisterValueChangedCallback((e) => rootVisualElement.Q<TextField>("SystemHelpInput").value = rootVisualElement.Q<DropdownField>("SystemHelpDropdown").value);
-
             rootVisualElement.Q<Label>("ArchiveTab").RegisterCallback<MouseDownEvent>((e) =>
             {
                 rootVisualElement.Q<Label>("ChatTab").RemoveFromClassList("tab-item-selected");
@@ -67,17 +64,6 @@ namespace InditeHappiness.LLM.Assistant
                 rootVisualElement.Q<VisualElement>("ChatContent").style.display = DisplayStyle.Flex;
                 rootVisualElement.Q<VisualElement>("ArchiveContent").style.display = DisplayStyle.None;
             });
-
-            ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
-
-            if (ChatArchive.LoadConversation() != null)
-            {
-                foreach (var item in ChatArchive.LoadConversation())
-                {
-                    chatView.Add(ItemFactory.CreateUserPromptItem(item.prompt));
-                    chatView.Add(ItemFactory.CreateChatResponseItem(item.response));
-                }
-            }
 
             rootVisualElement.Q<Button>("SendButton").clicked += SendPrompt;
         }
