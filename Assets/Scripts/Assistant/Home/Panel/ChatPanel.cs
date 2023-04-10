@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using InditeHappiness.LLM.Archive;
+using OpenAI.Chat;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,13 +11,17 @@ namespace InditeHappiness.LLM.Assistant
     public class ChatPanel : UIToolkitPanel
     {
         private ChatArchive ChatArchive { get; set; } = new();
+        private ChatAssistant ChatAssistant { get; set; }
 
         public ChatPanel(VisualElement root, StyleSheet styleSheet) : base(root, styleSheet) { }
 
         public override void Init()
         {
+            ChatAssistant = new();
+
             PrepareSystemMessageDropdown();
             PrepareCurrentConversation();
+            PrepareChatInteraction();
         }
 
         private void PrepareSystemMessageDropdown()
@@ -48,6 +53,32 @@ namespace InditeHappiness.LLM.Assistant
                 chatView.Add(ItemFactory.CreateUserPromptItem(item.prompt));
                 chatView.Add(ItemFactory.CreateChatResponseItem(item.response));
             }
+        }
+
+        private void PrepareChatInteraction()
+        {
+            Root.Q<Button>("SendButton").clicked += () => SendPrompt();
+
+            //TODO: Add support for Enter key
+            //Root.Q<TextField>("PromptInput").RegisterCallback<KeyDownEvent>(e => { if (e.keyCode == KeyCode.Return) SendPrompt(); });
+        }
+
+        private async void SendPrompt()
+        {
+            string prompt = Root.Q<TextField>("PromptInput").value;
+            string systemHelpMessage = Root.Q<TextField>("SystemHelpInput").value;
+            ScrollView chatView = Root.Q<ScrollView>("ChatView");
+
+            chatView.Add(ItemFactory.CreateUserPromptItem(prompt));
+            ChatArchive.SaveUserPrompt(prompt);
+
+            ChatResponse result = await ChatAssistant.SendPrompt(systemHelpMessage, prompt);
+
+            chatView.Add(ItemFactory.CreateChatResponseItem(result.FirstChoice.ToString()));
+            ChatArchive.SaveChatResponse(result.FirstChoice.ToString());
+
+            string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
+            chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
         }
     }
 }

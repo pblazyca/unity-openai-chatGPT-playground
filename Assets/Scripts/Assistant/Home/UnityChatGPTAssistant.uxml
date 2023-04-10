@@ -23,7 +23,7 @@
                     <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item chat-item-statistics" style="display: none;" />
                 </ui:ScrollView>
                 <ui:VisualElement name="PromptView" class="prompt-view" style="flex-shrink: 0;">
-                    <ui:TextField picking-mode="Ignore" value="Could you help me?" multiline="true" name="PromptInput" max-length="-1" class="prompot-input" />
+                    <ui:TextField picking-mode="Ignore" value="Could you help me?" multiline="false" name="PromptInput" max-length="-1" class="prompot-input" />
                     <ui:Button text="send" display-tooltip-when-elided="true" name="SendButton" />
                 </ui:VisualElement>
             </ui:VisualElement>

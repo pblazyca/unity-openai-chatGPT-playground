@@ -64,26 +64,6 @@ namespace InditeHappiness.LLM.Assistant
                 rootVisualElement.Q<VisualElement>("ChatContent").style.display = DisplayStyle.Flex;
                 rootVisualElement.Q<VisualElement>("ArchiveContent").style.display = DisplayStyle.None;
             });
-
-            rootVisualElement.Q<Button>("SendButton").clicked += SendPrompt;
-        }
-
-        private async void SendPrompt()
-        {
-            string prompt = rootVisualElement.Q<TextField>("PromptInput").value;
-            string systemHelpMessage = rootVisualElement.Q<TextField>("SystemHelpInput").value;
-            ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
-
-            chatView.Add(ItemFactory.CreateUserPromptItem(prompt));
-            ChatArchive.SaveUserPrompt(prompt);
-
-            ChatResponse result = await ChatAssistant.SendPrompt(systemHelpMessage, prompt);
-
-            chatView.Add(ItemFactory.CreateChatResponseItem(result.FirstChoice.ToString()));
-            ChatArchive.SaveChatResponse(result.FirstChoice.ToString());
-
-            string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
-            chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
         }
 
         //TODO: for future
