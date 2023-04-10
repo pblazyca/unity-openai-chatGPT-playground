@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Collections.Generic;
 using OpenAI;
 using OpenAI.Chat;

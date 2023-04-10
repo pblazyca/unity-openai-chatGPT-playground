@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
-using InditeHappiness.LLM.Assistant;
 
 namespace InditeHappiness.LLM.Archive
 {

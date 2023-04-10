@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using InditeHappiness.LLM.Archive;
 using OpenAI.Chat;
-using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace InditeHappiness.LLM.Assistant
