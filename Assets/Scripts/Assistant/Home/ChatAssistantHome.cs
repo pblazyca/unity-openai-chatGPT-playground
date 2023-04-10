@@ -47,7 +47,6 @@ namespace InditeHappiness.LLM.Assistant
         private void PrepareInterface()
         {
             ArchivePanel archivePanel = new(rootVisualElement, AssistantStyleSheet);
-            archivePanel.Init();
 
             rootVisualElement.Q<DropdownField>("SystemHelpDropdown").index = 0;
             rootVisualElement.Q<DropdownField>("SystemHelpDropdown").RegisterValueChangedCallback((e) => rootVisualElement.Q<TextField>("SystemHelpInput").value = rootVisualElement.Q<DropdownField>("SystemHelpDropdown").value);

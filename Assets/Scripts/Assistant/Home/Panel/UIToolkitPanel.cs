@@ -14,6 +14,8 @@ namespace InditeHappiness.LLM.Assistant
         {
             Root = root;
             ItemFactory = new(styleSheet);
+
+            Init();
         }
 
         public abstract void Init();
