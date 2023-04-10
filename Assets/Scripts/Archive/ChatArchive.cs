@@ -13,6 +13,14 @@ namespace InditeHappiness.LLM.Archive
         [field: SerializeField]
         private ArchiveData Data { get; set; } = new();
 
+        public bool IsCurrentConversationExists()
+        {
+            string fileName = $"chat-conversation-0000-{DateTime.Now.ToString("yyyyMMdd")}.json";
+            string filePath = Application.persistentDataPath + "/" + fileName;
+
+            return File.Exists(filePath);
+        }
+
         public List<(string prompt, string response)> LoadConversation()
         {
             string fileName = $"chat-conversation-0000-{DateTime.Now.ToString("yyyyMMdd")}.json";
