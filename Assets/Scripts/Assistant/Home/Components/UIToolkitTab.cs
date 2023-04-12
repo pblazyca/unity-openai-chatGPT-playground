@@ -5,8 +5,8 @@ namespace InditeHappiness.LLM.Assistant
 {
     public class UIToolkitTab
     {
-        private Action<UIToolkitTab> OnSelect { get; set; } = delegate { };
-        private Action<UIToolkitTab> OnDeselect { get; set; } = delegate { };
+        public event Action<UIToolkitTab> OnSelect = delegate { };
+        public event Action<UIToolkitTab> OnDeselect = delegate { };
 
         private VisualElement Root { get; set; }
         private VisualElement Tab { get; set; }
