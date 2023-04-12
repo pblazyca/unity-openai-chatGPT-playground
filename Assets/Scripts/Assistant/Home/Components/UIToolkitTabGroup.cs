@@ -7,9 +7,12 @@ namespace InditeHappiness.LLM.Assistant
         private UIToolkitTab CurrentTab { get; set; }
         private List<UIToolkitTab> TabCollection { get; set; } = new();
 
-        public UIToolkitTabGroup(List<UIToolkitTab> tabs)
+        public UIToolkitTabGroup(List<UIToolkitTab> tabs, UIToolkitTab defaultTab = null)
         {
             TabCollection = tabs;
+            CurrentTab = defaultTab;
+
+            CurrentTab?.Select();
             SubscribeEvents();
         }
 

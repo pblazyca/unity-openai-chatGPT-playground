@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using InditeHappiness.LLM.Archive;
+using System;
 
 namespace InditeHappiness.LLM.Assistant
 {
@@ -48,15 +49,22 @@ namespace InditeHappiness.LLM.Assistant
             ArchivePanel archivePanel = new(rootVisualElement, AssistantStyleSheet);
             ChatPanel chatPanel = new(rootVisualElement, AssistantStyleSheet);
 
+            PrepareTabGroup();
+        }
+
+        private void PrepareTabGroup()
+        {
+            UIToolkitTab defaultTab = new(rootVisualElement, "ChatTab", "ChatContent");
+
             UIToolkitTabGroup tabGroup = new(new List<UIToolkitTab>
             {
-                new (rootVisualElement, "ChatTab", "ChatContent"),
+                defaultTab,
                 new (rootVisualElement, "SettingsTab", "SettingsContent"),
                 new (rootVisualElement, "ArchiveTab", "ArchiveContent"),
                 new (rootVisualElement, "ToolsTab", "ToolsContent"),
                 new (rootVisualElement, "LogsTab", "LogsContent"),
                 new (rootVisualElement, "DebugTab", "DebugContent"),
-            });
+            }, defaultTab);
         }
 
         //TODO: for future
