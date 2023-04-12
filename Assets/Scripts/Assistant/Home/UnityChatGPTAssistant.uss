@@ -82,6 +82,7 @@
 .tab-item-selected {
     border-left-color: rgb(35, 35, 58);
     border-left-width: 4px;
+    padding-left: 11px;
 }
 
 .root-panel {
