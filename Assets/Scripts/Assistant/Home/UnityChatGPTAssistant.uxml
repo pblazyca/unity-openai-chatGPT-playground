@@ -1,7 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Assets/Scripts/Assistant/Home/UnityChatGPTAssistant.uss?fileID=7433441132597879392&amp;guid=c98804df7478bf54f90d0e1e34d3b60b&amp;type=3#UnityChatGPTAssistant" />
     <ui:VisualElement name="menuRoot" class="root-panel">
-        <ui:VisualElement name="tabs" style="background-color: rgba(0, 0, 0, 0); flex-direction: column; border-right-width: 2px;">
+        <ui:VisualElement name="tabs" style="flex-direction: column; background-color: rgba(0, 0, 0, 0.2);">
             <ui:Label tabindex="-1" text="Chat" display-tooltip-when-elided="true" name="ChatTab" enable-rich-text="true" class="tab-item tab-item-selected" />
             <ui:Label tabindex="-1" text="Settings" display-tooltip-when-elided="true" name="SettingsTab" class="tab-item" />
             <ui:Label tabindex="-1" text="Archive" display-tooltip-when-elided="true" name="ArchiveTab" class="tab-item" />
@@ -9,7 +9,7 @@
             <ui:Label tabindex="-1" text="Logs" display-tooltip-when-elided="true" name="LogsTab" class="tab-item" />
             <ui:Label tabindex="-1" text="Debug" display-tooltip-when-elided="true" name="DebugTab" class="tab-item" />
         </ui:VisualElement>
-        <ui:VisualElement name="tabContent" style="flex-grow: 1;">
+        <ui:VisualElement name="tabContent" style="flex-grow: 1; padding-left: 5px; padding-right: 5px; padding-bottom: 5px; padding-top: 0;">
             <ui:VisualElement name="ChatContent" class="grow-panel space-between-panel" style="display: flex; flex-shrink: 1;">
                 <ui:VisualElement name="SystemView" style="margin-top: 2px; overflow: visible; flex-shrink: 0;">
                     <ui:DropdownField index="0" name="SystemHelpDropdown" style="flex-grow: 1; overflow: hidden; margin-top: 0; margin-bottom: 0;" />
