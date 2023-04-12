@@ -75,7 +75,7 @@
     padding-right: 15px;
     padding-top: 4px;
     padding-bottom: 4px;
-    -unity-text-align: upper-center;
+    -unity-text-align: upper-left;
     white-space: nowrap;
 }
 
