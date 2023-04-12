@@ -48,20 +48,14 @@ namespace InditeHappiness.LLM.Assistant
             ArchivePanel archivePanel = new(rootVisualElement, AssistantStyleSheet);
             ChatPanel chatPanel = new(rootVisualElement, AssistantStyleSheet);
 
-            rootVisualElement.Q<Label>("ArchiveTab").RegisterCallback<MouseDownEvent>((e) =>
+            UIToolkitTabGroup tabGroup = new(new List<UIToolkitTab>
             {
-                rootVisualElement.Q<Label>("ChatTab").RemoveFromClassList("tab-item-selected");
-                rootVisualElement.Q<Label>("ArchiveTab").AddToClassList("tab-item-selected");
-                rootVisualElement.Q<VisualElement>("ArchiveContent").style.display = DisplayStyle.Flex;
-                rootVisualElement.Q<VisualElement>("ChatContent").style.display = DisplayStyle.None;
-            });
-
-            rootVisualElement.Q<Label>("ChatTab").RegisterCallback<MouseDownEvent>((e) =>
-            {
-                rootVisualElement.Q<Label>("ArchiveTab").RemoveFromClassList("tab-item-selected");
-                rootVisualElement.Q<Label>("ChatTab").AddToClassList("tab-item-selected");
-                rootVisualElement.Q<VisualElement>("ChatContent").style.display = DisplayStyle.Flex;
-                rootVisualElement.Q<VisualElement>("ArchiveContent").style.display = DisplayStyle.None;
+                new (rootVisualElement, "ChatTab", "ChatContent"),
+                new (rootVisualElement, "SettingsTab", "SettingsContent"),
+                new (rootVisualElement, "ArchiveTab", "ArchiveContent"),
+                new (rootVisualElement, "ToolsTab", "ToolsContent"),
+                new (rootVisualElement, "LogsTab", "LogsContent"),
+                new (rootVisualElement, "DebugTab", "DebugContent"),
             });
         }
 
