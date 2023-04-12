@@ -46,9 +46,10 @@ namespace InditeHappiness.LLM.Assistant
 
             foreach (var item in ChatArchive.LoadConversation())
             {
-                chatView.Add(ItemFactory.CreateUserPromptItem(item.prompt));
-                chatView.Add(ItemFactory.CreateChatResponseItem(item.response));
-                chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(item.stats));
+                foreach (var data in item.ChatSaveDataCollection)
+                {
+                    chatView.Add(ItemFactory.CreateItem(data.Text, data.Type));
+                }
             }
         }
 
@@ -75,7 +76,7 @@ namespace InditeHappiness.LLM.Assistant
             chatView.Add(ItemFactory.CreateChatResponseItem(result.FirstChoice.ToString()));
             chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
 
-            ChatArchive.RegisterChatResponse(result.FirstChoice.ToString(), stats, result.Created);
+            ChatArchive.RegisterPromptResponse(result.FirstChoice.ToString(), stats, result.Created);
             ChatArchive.SaveBulk();
         }
     }

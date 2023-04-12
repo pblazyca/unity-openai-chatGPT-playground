@@ -30,9 +30,10 @@ namespace InditeHappiness.LLM.Assistant
 
             foreach (var item in ChatArchive.LoadConversation(Root.Q<DropdownField>("ArchiveDropdown").value))
             {
-                archiveView.Add(ItemFactory.CreateUserPromptItem(item.prompt));
-                archiveView.Add(ItemFactory.CreateChatResponseItem(item.response));
-                archiveView.Add(ItemFactory.CreateChatResponseStatisticsItem(item.stats));
+                foreach (var data in item.ChatSaveDataCollection)
+                {
+                    archiveView.Add(ItemFactory.CreateItem(data.Text, data.Type));
+                }
             }
         }
     }

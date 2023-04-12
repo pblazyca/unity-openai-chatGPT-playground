@@ -11,7 +11,8 @@ namespace InditeHappiness.LLM.Archive
         [field: SerializeField]
         private ArchiveData Data { get; set; } = new();
 
-        private List<ChatSaveData> ChatPromptSaveBulk { get; set; } = new();
+        private List<ItemSaveData> PromptSaveBulkData { get; set; } = new();
+        private PromptSaveData CurrentPromptSaveData { get; set; } = new();
 
         public bool IsCurrentConversationExists()
         {
@@ -21,7 +22,7 @@ namespace InditeHappiness.LLM.Archive
             return File.Exists(filePath);
         }
 
-        public List<(string prompt, string response, string stats)> LoadConversation()
+        public List<PromptSaveData> LoadConversation()
         {
             string fileName = $"chat-conversation-0000-{DateTime.Now.ToString("yyyyMMdd")}.json";
             string filePath = Application.persistentDataPath + "/" + fileName;
@@ -29,23 +30,7 @@ namespace InditeHappiness.LLM.Archive
             if (File.Exists(filePath) == true)
             {
                 Data = JsonConvert.DeserializeObject<ArchiveData>(File.ReadAllText(filePath));
-                List<(string, string, string)> dataCollection = new();
-
-                for (int i = 0; i < Data.ChatSaveDataCollection.Count; i++)
-                {
-                    (string, string, string) dataItem = new();
-
-                    if (Data.ChatSaveDataCollection[i].type == ChatItemType.USER)
-                    {
-                        dataItem.Item1 = Data.ChatSaveDataCollection[i].text;
-                        dataItem.Item2 = Data.ChatSaveDataCollection[i + 1].text;
-                        dataItem.Item3 = Data.ChatSaveDataCollection[i + 2].text;
-
-                        dataCollection.Add(dataItem);
-                    }
-                }
-
-                return dataCollection;
+                return Data.ChatSaveDataCollection;
             }
 
             return null;
@@ -74,30 +59,14 @@ namespace InditeHappiness.LLM.Archive
             return dataCollection;
         }
 
-        public List<(string prompt, string response, string stats)> LoadConversation(string fileName)
+        public List<PromptSaveData> LoadConversation(string fileName)
         {
             string filePath = Application.persistentDataPath + "/" + fileName;
 
             if (File.Exists(filePath) == true)
             {
                 Data = JsonConvert.DeserializeObject<ArchiveData>(File.ReadAllText(filePath));
-                List<(string, string, string)> dataCollection = new();
-
-                for (int i = 0; i < Data.ChatSaveDataCollection.Count; i++)
-                {
-                    (string, string, string) dataItem = new();
-
-                    if (Data.ChatSaveDataCollection[i].type == ChatItemType.USER)
-                    {
-                        dataItem.Item1 = Data.ChatSaveDataCollection[i].text;
-                        dataItem.Item2 = Data.ChatSaveDataCollection[i + 1].text;
-                        dataItem.Item3 = Data.ChatSaveDataCollection[i + 2].text;
-
-                        dataCollection.Add(dataItem);
-                    }
-                }
-
-                return dataCollection;
+                return Data.ChatSaveDataCollection;
             }
 
             return null;
@@ -105,23 +74,26 @@ namespace InditeHappiness.LLM.Archive
 
         public void RegisterUserPrompt(string prompt)
         {
-            ChatSaveData saveData = new(DateTime.Now.Ticks, ChatItemType.USER, prompt);
-            ChatPromptSaveBulk.Add(saveData);
+            ItemSaveData saveData = new(DateTime.Now.Ticks, ChatItemType.USER, prompt);
+            PromptSaveBulkData.Add(saveData);
         }
 
-        public void RegisterChatResponse(string response, string stats, long responseTime)
+        public void RegisterPromptResponse(string response, string stats, long responseTime)
         {
-            ChatSaveData saveData = new(responseTime, ChatItemType.CHAT, response);
-            ChatPromptSaveBulk.Add(saveData);
+            ItemSaveData saveData = new(responseTime, ChatItemType.CHAT, response);
+            PromptSaveBulkData.Add(saveData);
 
             saveData = new(responseTime, ChatItemType.STATISTICS, stats);
-            ChatPromptSaveBulk.Add(saveData);
+            PromptSaveBulkData.Add(saveData);
         }
 
         public void SaveBulk()
         {
-            Data.Add(ChatPromptSaveBulk);
-            ChatPromptSaveBulk.Clear();
+            CurrentPromptSaveData.Add(PromptSaveBulkData);
+            PromptSaveBulkData.Clear();
+
+            Data.Add(CurrentPromptSaveData);
+            CurrentPromptSaveData = new();
 
             SaveItem();
         }
@@ -143,39 +115,45 @@ namespace InditeHappiness.LLM.Archive
         [System.Serializable]
         private class ArchiveData
         {
-            public List<ChatSaveData> ChatSaveDataCollection = new();
+            public List<PromptSaveData> ChatSaveDataCollection = new();
 
-            public void Add(ChatSaveData data)
+            public void Add(PromptSaveData data)
             {
                 ChatSaveDataCollection.Add(data);
             }
+        }
 
-            public void Add(List<ChatSaveData> data)
+        [System.Serializable]
+        public class PromptSaveData
+        {
+            public List<ItemSaveData> ChatSaveDataCollection = new();
+
+            public void Add(List<ItemSaveData> data)
             {
                 ChatSaveDataCollection.AddRange(data);
             }
         }
 
         [System.Serializable]
-        private class ChatSaveData
+        public class ItemSaveData
         {
             [SerializeField]
-            private long timestamp;
+            private long Timestamp { get; set; }
             [SerializeField]
-            public ChatItemType type;
+            public ChatItemType Type { get; set; }
             [SerializeField]
-            public string text;
+            public string Text { get; set; }
 
-            public ChatSaveData(long timestamp, ChatItemType type, string text)
+            public ItemSaveData(long timestamp, ChatItemType type, string text)
             {
-                this.timestamp = timestamp;
-                this.type = type;
-                this.text = text;
+                Timestamp = timestamp;
+                Type = type;
+                Text = text;
             }
 
             public override string ToString()
             {
-                return type.ToString() + " " + text;
+                return Type.ToString() + " " + Text;
             }
         }
     }

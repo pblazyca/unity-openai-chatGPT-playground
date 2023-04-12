@@ -31,6 +31,28 @@ namespace InditeHappiness.LLM.Assistant
             AssistantStyleSheet = styleSheet;
         }
 
+        public Label CreateItem(string text, ChatItemType type)
+        {
+            Label item = new(text);
+
+            switch (type)
+            {
+                case ChatItemType.USER:
+                    BuildItem(item, UserItemClassCollection);
+                    break;
+                case ChatItemType.CHAT:
+                    BuildItem(item, ResponseItemClassCollection);
+                    break;
+                case ChatItemType.STATISTICS:
+                    BuildItem(item, StatsItemClassCollection);
+                    break;
+                default:
+                    break;
+            }
+
+            return item;
+        }
+
         public Label CreateUserPromptItem(string text = "")
         {
             Label userPrompt = new(text);
