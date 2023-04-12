@@ -19,9 +19,10 @@ namespace InditeHappiness.LLM.Assistant
         public UIToolkitTab(VisualElement root, string tabName, string contentName)
         {
             Root = root;
-
             Tab = Root.Q<VisualElement>(tabName);
             Content = Root.Q<VisualElement>(contentName);
+
+            SubscribeEvents();
         }
 
         public void Select()
