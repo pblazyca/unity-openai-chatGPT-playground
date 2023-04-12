@@ -98,7 +98,6 @@ namespace InditeHappiness.LLM.Assistant
 
             stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
 
-            ChatArchive.SaveChatResponse(chatResponse.text);
             chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
         }
     }

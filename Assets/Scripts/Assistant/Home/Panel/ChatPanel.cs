@@ -48,6 +48,7 @@ namespace InditeHappiness.LLM.Assistant
             {
                 chatView.Add(ItemFactory.CreateUserPromptItem(item.prompt));
                 chatView.Add(ItemFactory.CreateChatResponseItem(item.response));
+                chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(item.stats));
             }
         }
 
@@ -66,15 +67,16 @@ namespace InditeHappiness.LLM.Assistant
             ScrollView chatView = Root.Q<ScrollView>("ChatView");
 
             chatView.Add(ItemFactory.CreateUserPromptItem(prompt));
-            ChatArchive.SaveUserPrompt(prompt);
+            ChatArchive.RegisterUserPrompt(prompt);
 
             ChatResponse result = await ChatAssistant.SendPrompt(systemHelpMessage, prompt);
+            string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
 
             chatView.Add(ItemFactory.CreateChatResponseItem(result.FirstChoice.ToString()));
-            ChatArchive.SaveChatResponse(result.FirstChoice.ToString());
-
-            string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
             chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
+
+            ChatArchive.RegisterChatResponse(result.FirstChoice.ToString(), stats, result.Created);
+            ChatArchive.SaveBulk();
         }
     }
 }

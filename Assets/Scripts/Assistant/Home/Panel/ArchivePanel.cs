@@ -32,6 +32,7 @@ namespace InditeHappiness.LLM.Assistant
             {
                 archiveView.Add(ItemFactory.CreateUserPromptItem(item.prompt));
                 archiveView.Add(ItemFactory.CreateChatResponseItem(item.response));
+                archiveView.Add(ItemFactory.CreateChatResponseStatisticsItem(item.stats));
             }
         }
     }
