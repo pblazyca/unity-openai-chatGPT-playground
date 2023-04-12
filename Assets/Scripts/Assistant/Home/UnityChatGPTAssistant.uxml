@@ -43,6 +43,15 @@
                 </ui:VisualElement>
                 <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="ArchiveView" class="grow-panel chat-view" style="flex-shrink: 1;" />
             </ui:VisualElement>
+            <ui:VisualElement name="LogsContent" class="grow-panel space-between-panel" style="display: none; flex-shrink: 0;">
+                <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="DebugView" class="grow-panel chat-view">
+                    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-user chat-item" style="display: flex;" />
+                    <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-gpt chat-item" style="display: flex;" />
+                    <ui:Label tabindex="-1" text="sdfgsdfg sgrg sdgdfsg sdgsdfg sd fgdfsg sdfgsdfg sdfgsdfgs dfds fgsdfg sdfg sdfgsdfg sdf gsfdsf sdf ssfsf df sdf sdfsd fsd fs fdss fsf sfsghgjhghjhjjhhjg asd asd a " display-tooltip-when-elided="true" name="Label" class="chat-item-user chat-item" style="display: flex;" />
+                    <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item" style="display: flex;" />
+                    <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item chat-item-statistics" style="display: flex;" />
+                </ui:ScrollView>
+            </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
