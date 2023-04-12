@@ -19,7 +19,7 @@ namespace InditeHappiness.LLM.Assistant
             {
                 tab.OnSelect += (UIToolkitTab selectedTab) =>
                 {
-                    if (CurrentTab != null)
+                    if (CurrentTab != null && CurrentTab != selectedTab)
                     {
                         CurrentTab.Deselect();
                     }
