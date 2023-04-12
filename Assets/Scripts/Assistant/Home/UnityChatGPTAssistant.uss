@@ -77,12 +77,15 @@
     padding-bottom: 4px;
     -unity-text-align: upper-left;
     white-space: nowrap;
+    background-color: rgba(0, 0, 0, 0.24);
 }
 
 .tab-item-selected {
-    border-left-color: rgb(35, 35, 58);
-    border-left-width: 4px;
-    padding-left: 11px;
+    border-left-color: rgb(88, 88, 175);
+    border-left-width: 6px;
+    padding-left: 9px;
+    border-bottom-color: rgba(35, 35, 58, 0);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .root-panel {
