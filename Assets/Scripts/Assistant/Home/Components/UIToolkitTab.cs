@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 using UnityEngine.UIElements;
 
 namespace InditeHappiness.LLM.Assistant
 {
     public class UIToolkitTab
     {
+        private Action<UIToolkitTab> OnSelect { get; set; } = delegate { };
+        private Action<UIToolkitTab> OnDeselect { get; set; } = delegate { };
+
         private VisualElement Root { get; set; }
         private VisualElement Tab { get; set; }
         private VisualElement Content { get; set; }
@@ -28,6 +29,8 @@ namespace InditeHappiness.LLM.Assistant
             IsSelected = true;
             Tab.AddToClassList(SELECTED_TAB_CLASS);
             Content.style.display = DisplayStyle.Flex;
+
+            OnSelect.Invoke(this);
         }
 
         public void Deselect()
@@ -35,6 +38,8 @@ namespace InditeHappiness.LLM.Assistant
             IsSelected = false;
             Tab.RemoveFromClassList(SELECTED_TAB_CLASS);
             Content.style.display = DisplayStyle.None;
+
+            OnDeselect.Invoke(this);
         }
 
         private void SubscribeEvents()
