@@ -39,6 +39,7 @@
     padding-right: 5px;
     padding-left: 4px;
     border-bottom-color: rgb(88, 88, 175);
+    border-bottom-width: 4px;
 }
 
 .chat-item-gpt {
@@ -51,6 +52,7 @@
     padding-left: 5px;
     padding-right: 4px;
     border-bottom-color: rgb(169, 176, 79);
+    border-bottom-width: 4px;
 }
 
 .chat-item-statistics {
@@ -65,16 +67,15 @@
     padding-bottom: 3px;
     border-bottom-left-radius: 8px;
     -unity-font-style: italic;
+    border-bottom-width: 2px;
 }
 
 .tab-item {
     flex-grow: 0;
-    margin-left: 0;
-    margin-right: 0;
     margin-top: 2px;
     margin-bottom: 2px;
     padding-left: 15px;
-    padding-right: 15px;
+    padding-right: 40px;
     padding-top: 4px;
     padding-bottom: 4px;
     -unity-text-align: upper-left;
@@ -84,6 +85,8 @@
     border-bottom-left-radius: 0;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
+    font-size: 16px;
+    -unity-font-style: normal;
 }
 
 .tab-item-selected {
@@ -92,6 +95,7 @@
     padding-left: 9px;
     border-bottom-color: rgba(35, 35, 58, 0);
     background-color: rgba(0, 0, 0, 0.5);
+    -unity-font-style: bold;
 }
 
 .root-panel {
