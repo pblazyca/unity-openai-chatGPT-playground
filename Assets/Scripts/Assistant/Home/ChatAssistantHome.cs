@@ -54,17 +54,15 @@ namespace InditeHappiness.LLM.Assistant
 
         private void PrepareTabGroup()
         {
-            UIToolkitTab defaultTab = new(rootVisualElement, "ChatTab", "ChatContent");
-
-            UIToolkitTabGroup tabGroup = new(new List<UIToolkitTab>
+            UIToolkitTabGroup tabGroup = new(new()
             {
-                defaultTab,
+                new(rootVisualElement, "ChatTab", "ChatContent"),
                 new (rootVisualElement, "SettingsTab", "SettingsContent"),
                 new (rootVisualElement, "ArchiveTab", "ArchiveContent"),
                 new (rootVisualElement, "ToolsTab", "ToolsContent"),
                 new (rootVisualElement, "LogsTab", "LogsContent"),
                 new (rootVisualElement, "DebugTab", "DebugContent"),
-            }, defaultTab);
+            });
         }
 
         //TODO: for future
