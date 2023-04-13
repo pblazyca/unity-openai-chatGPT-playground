@@ -44,7 +44,7 @@
 
 .chat-item-gpt {
     align-self: flex-start;
-    background-color: rgb(88, 88, 88);
+    background-color: rgb(82, 82, 82);
     border-bottom-right-radius: 8px;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
