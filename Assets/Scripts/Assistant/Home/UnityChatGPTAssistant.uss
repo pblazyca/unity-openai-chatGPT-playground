@@ -51,7 +51,7 @@
     margin-right: 20px;
     padding-left: 5px;
     padding-right: 4px;
-    border-bottom-color: rgb(169, 176, 79);
+    border-bottom-color: rgb(97, 139, 176);
     border-bottom-width: 4px;
 }
 
