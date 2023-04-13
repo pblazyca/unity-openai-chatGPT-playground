@@ -24,6 +24,7 @@
                 </ui:ScrollView>
                 <ui:VisualElement name="PromptView" class="prompt-view" style="flex-shrink: 0;">
                     <ui:TextField picking-mode="Ignore" value="Could you help me?" multiline="true" name="PromptInput" max-length="-1" class="prompot-input" />
+                    <ui:Label tabindex="-1" text="&lt;a href= https://platform.openai.com/docs/api-reference/chat/create&gt;Open AI docs&lt;/a&gt;" display-tooltip-when-elided="true" />
                     <ui:Slider picking-mode="Ignore" label="temperature" value="1" high-value="2" name="TempValue" show-input-field="true" direction="Horizontal" inverted="false" />
                     <ui:Slider picking-mode="Ignore" label="top_p" value="1" high-value="1" name="ToppValue" show-input-field="true" />
                     <ui:IntegerField label="n" value="1" name="ResponseCount" />
