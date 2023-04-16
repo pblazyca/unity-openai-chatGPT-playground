@@ -29,6 +29,12 @@ namespace InditeHappiness.LLM.Assistant
             return response;
         }
 
+        public async Task<ChatResponse> SendPrompt(ChatRequest promptRequest)
+        {
+            ChatResponse response = await OpenAI.ChatEndpoint.GetCompletionAsync(promptRequest);
+            return response;
+        }
+
         private void Init()
         {
             string configFilePath = Application.dataPath;

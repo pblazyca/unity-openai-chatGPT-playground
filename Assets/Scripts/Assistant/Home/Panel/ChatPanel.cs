@@ -65,13 +65,13 @@ namespace InditeHappiness.LLM.Assistant
         private async void SendPrompt()
         {
             string prompt = Root.Q<TextField>("PromptInput").value;
-            string systemHelpMessage = Root.Q<TextField>("SystemHelpInput").value;
+            ChatRequest promptRequest = PreparePromptRequest(prompt);
             ScrollView chatView = Root.Q<ScrollView>("ChatView");
 
             chatView.Add(ItemFactory.CreateUserPromptItem(prompt));
             ChatArchive.RegisterUserPrompt(prompt);
 
-            ChatResponse result = await ChatAssistant.SendPrompt(systemHelpMessage, prompt);
+            ChatResponse result = await ChatAssistant.SendPrompt(promptRequest);
             string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
 
             chatView.Add(ItemFactory.CreateChatResponseItem(result.FirstChoice.ToString()));
@@ -81,9 +81,8 @@ namespace InditeHappiness.LLM.Assistant
             ChatArchive.SaveBulk();
         }
 
-        private ChatRequest PreparePromptRequest()
+        private ChatRequest PreparePromptRequest(string prompt)
         {
-            string prompt = Root.Q<TextField>("PromptInput").value;
             string systemHelpMessage = Root.Q<TextField>("SystemHelpInput").value;
 
             List<Message> chatPrompts = new()
@@ -98,7 +97,9 @@ namespace InditeHappiness.LLM.Assistant
             int maxTokens = Root.Q<IntegerField>("MaxTokensValue").value;
             double presencePenalty = Root.Q<Slider>("FrequencyValue").value;
             double frequencyPenalty = Root.Q<Slider>("PresenceValue").value;
+
             string userID = Root.Q<TextField>("UserIDValue").value;
+            userID = userID == string.Empty ? null : userID;
 
             return new(
                 chatPrompts,
