@@ -27,8 +27,7 @@
                     <ui:Label tabindex="-1" text="&lt;a href= https://platform.openai.com/docs/api-reference/chat/create&gt;Open AI docs&lt;/a&gt;" display-tooltip-when-elided="true" />
                     <ui:Slider picking-mode="Ignore" label="temperature" value="1" high-value="2" name="TempValue" show-input-field="true" direction="Horizontal" inverted="false" />
                     <ui:Slider picking-mode="Ignore" label="top_p" value="1" high-value="1" name="ToppValue" show-input-field="true" />
-                    <ui:IntegerField label="n" value="1" name="ResponseCount" />
-                    <ui:SliderInt picking-mode="Ignore" label="logprobs" value="0" high-value="5" show-input-field="true" name="LogProbsValue" />
+                    <ui:IntegerField label="n" value="1" name="ResponseNumber" />
                     <ui:IntegerField label="max_tokens" value="4096" name="MaxTokensValue" />
                     <ui:Slider picking-mode="Ignore" label="presence_penalty" value="0" high-value="2" name="PresenceValue" low-value="-2" show-input-field="true" />
                     <ui:Slider picking-mode="Ignore" label="frequency_penalty" value="0" high-value="2" name="FrequencyValue" low-value="-2" show-input-field="true" />
