@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using InditeHappiness.LLM.Archive;
 using OpenAI.Chat;
 using UnityEngine.UIElements;
@@ -78,6 +79,37 @@ namespace InditeHappiness.LLM.Assistant
 
             ChatArchive.RegisterPromptResponse(result.FirstChoice.ToString(), stats, result.Created);
             ChatArchive.SaveBulk();
+        }
+
+        private ChatRequest PreparePromptRequest()
+        {
+            string prompt = Root.Q<TextField>("PromptInput").value;
+            string systemHelpMessage = Root.Q<TextField>("SystemHelpInput").value;
+
+            List<Message> chatPrompts = new()
+            {
+                new (Role.System, systemHelpMessage),
+                new (Role.User, prompt)
+            };
+
+            double temperature = Root.Q<Slider>("TempValue").value;
+            double topP = Root.Q<Slider>("ToppValue").value;
+            int responseNumber = Root.Q<IntegerField>("ResponseNumber").value;
+            int maxTokens = Root.Q<IntegerField>("MaxTokensValue").value;
+            double presencePenalty = Root.Q<Slider>("FrequencyValue").value;
+            double frequencyPenalty = Root.Q<Slider>("PresenceValue").value;
+            string userID = Root.Q<TextField>("UserIDValue").value;
+
+            return new(
+                chatPrompts,
+                temperature: temperature,
+                topP: topP, number:
+                responseNumber,
+                maxTokens: maxTokens,
+                presencePenalty: presencePenalty,
+                frequencyPenalty: frequencyPenalty,
+                user: userID
+            );
         }
     }
 }
