@@ -36,7 +36,7 @@ namespace InditeHappiness.LLM.Assistant
             return response;
         }
 
-        public async void SendPromptStreamAnswer(string systemInfo, string prompt, Action<ChatResponse> streamCallback)
+        public async Task<ChatResponse> SendPromptStreamAnswer(string systemInfo, string prompt, Action<ChatResponse> streamCallback)
         {
             List<Message> prompts = new()
             {
@@ -45,12 +45,14 @@ namespace InditeHappiness.LLM.Assistant
             };
 
             ChatRequest request = new(prompts);
-            await OpenAI.ChatEndpoint.StreamCompletionAsync(request, result => streamCallback(result));
+            ChatResponse response = await OpenAI.ChatEndpoint.StreamCompletionAsync(request, result => streamCallback(result));
+            return response;
         }
 
-        public async void SendPromptStreamAnswer(ChatRequest promptRequest, Action<ChatResponse> streamCallback)
+        public async Task<ChatResponse> SendPromptStreamAnswer(ChatRequest promptRequest, Action<ChatResponse> streamCallback)
         {
-            await OpenAI.ChatEndpoint.StreamCompletionAsync(promptRequest, result => streamCallback(result));
+            ChatResponse response = await OpenAI.ChatEndpoint.StreamCompletionAsync(promptRequest, result => streamCallback(result));
+            return response;
         }
 
         private void Init()
