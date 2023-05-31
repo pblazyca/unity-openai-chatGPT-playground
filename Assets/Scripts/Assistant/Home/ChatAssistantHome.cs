@@ -56,7 +56,7 @@ namespace InditeHappiness.LLM.Assistant
         {
             UIToolkitTabGroup tabGroup = new(new()
             {
-                new(rootVisualElement, "ChatTab", "ChatContent"),
+                new (rootVisualElement, "ChatTab", "ChatContent"),
                 new (rootVisualElement, "SettingsTab", "SettingsContent"),
                 new (rootVisualElement, "ArchiveTab", "ArchiveContent"),
                 new (rootVisualElement, "ToolsTab", "ToolsContent"),
