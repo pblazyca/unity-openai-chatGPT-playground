@@ -16,9 +16,7 @@ namespace InditeHappiness.LLM.Assistant
         [field: SerializeField]
         private StyleSheet AssistantStyleSheet { get; set; }
 
-        private OpenAIClient OpenAI { get; set; }
         private ChatAssistant ChatAssistant { get; set; }
-        private ChatArchive ChatArchive { get; set; } = new();
         private ChatItemFactory ItemFactory { get; set; }
 
         [MenuItem("Tools/Chat GPT Assistant")]
@@ -63,40 +61,6 @@ namespace InditeHappiness.LLM.Assistant
                 new (rootVisualElement, "LogsTab", "LogsContent"),
                 new (rootVisualElement, "DebugTab", "DebugContent"),
             });
-        }
-
-        //TODO: for future
-        private async void GenerateStreamAnswer()
-        {
-            string prompt = rootVisualElement.Q<TextField>("PromptInput").value;
-            string systemHelpMessage = rootVisualElement.Q<TextField>("SystemHelpInput").value;
-            ScrollView chatView = rootVisualElement.Q<ScrollView>("ChatView");
-
-            List<Message> chatPrompts = new()
-        {
-            new (Role.System, systemHelpMessage),
-            new (Role.User, prompt)
-        };
-
-            ChatRequest chatRequest = new(chatPrompts);
-
-            Label chatResponse = ItemFactory.CreateChatResponseItem();
-            chatView.Add(chatResponse);
-            string stats = string.Empty;
-
-            ChatResponse result = null;
-
-            await OpenAI.ChatEndpoint.StreamCompletionAsync(chatRequest, r =>
-            {
-                result = r;
-                chatResponse.text += result.FirstChoice;
-
-                //Debug.Log(result.FirstChoice);
-            });
-
-            stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
-
-            chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
         }
     }
 }
