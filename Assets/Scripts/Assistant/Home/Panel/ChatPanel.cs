@@ -60,8 +60,13 @@ namespace InditeHappiness.LLM.Assistant
         {
             Root.Q<Button>("SendButton").clicked += () => SendPrompt();
 
-            //TODO: Add support for Enter key
-            //Root.Q<TextField>("PromptInput").RegisterCallback<KeyDownEvent>(e => { if (e.keyCode == KeyCode.Return) SendPrompt(); });
+            Root.Q<TextField>("PromptInput").RegisterCallback<KeyDownEvent>(e =>
+            {
+                if (((e.keyCode == UnityEngine.KeyCode.Return || e.keyCode == UnityEngine.KeyCode.KeypadEnter) && e.shiftKey == false) && (Root.Q<TextField>("PromptInput").value != string.Empty))
+                {
+                    SendPrompt();
+                }
+            });
         }
 
         private async void SendPrompt()
@@ -98,6 +103,7 @@ namespace InditeHappiness.LLM.Assistant
             }
 
             ChatArchive.SaveBulk();
+            Root.Q<TextField>("PromptInput").value = string.Empty;
         }
 
         private ChatRequest PreparePromptRequest(string prompt)
