@@ -1,4 +1,6 @@
+using System.Diagnostics;
 using System.Collections.Generic;
+using System.Linq;
 using InditeHappiness.LLM.Archive;
 using OpenAI.Chat;
 using UnityEngine.UIElements;
@@ -71,13 +73,30 @@ namespace InditeHappiness.LLM.Assistant
             chatView.Add(ItemFactory.CreateUserPromptItem(prompt));
             ChatArchive.RegisterUserPrompt(prompt);
 
-            ChatResponse result = await ChatAssistant.SendPrompt(promptRequest);
-            string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
+            switch (Root.Q<EnumField>("ChatResponseMode").value)
+            {
+                case ChatResponseMode.FULL:
+                    ChatResponse result = await ChatAssistant.SendPrompt(promptRequest);
+                    string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
+                    chatView.Add(ItemFactory.CreateChatResponseItem(result.FirstChoice.ToString()));
+                    chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
 
-            chatView.Add(ItemFactory.CreateChatResponseItem(result.FirstChoice.ToString()));
-            chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
+                    ChatArchive.RegisterPromptResponse(result.FirstChoice.ToString(), stats, result.Created);
+                    break;
+                case ChatResponseMode.PARTIAL:
+                    Label responseItem = ItemFactory.CreateChatResponseItem(string.Empty);
+                    chatView.Add(responseItem);
 
-            ChatArchive.RegisterPromptResponse(result.FirstChoice.ToString(), stats, result.Created);
+                    await ChatAssistant.SendPromptStreamAnswer(promptRequest, (ChatResponse result) =>
+                    {
+                        foreach (var choice in result.Choices.Where(choice => choice.Delta?.Content != null))
+                        {
+                            responseItem.text += choice.Delta.Content;
+                        }
+                    });
+                    break;
+            }
+
             ChatArchive.SaveBulk();
         }
 
