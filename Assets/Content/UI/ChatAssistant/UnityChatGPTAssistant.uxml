@@ -34,7 +34,7 @@
                     </ui:Foldout>
                     <ui:TextField picking-mode="Ignore" value="Could you help me?" multiline="true" name="PromptInput" max-length="-1" class="prompot-input" />
                     <ui:Button text="send" display-tooltip-when-elided="true" name="SendButton" />
-                    <ui:Label tabindex="-1" text="&lt;a href= https://platform.openai.com/docs/api-reference/chat/create&gt;Open AI docs&lt;/a&gt;" display-tooltip-when-elided="true" name="OpenAIDocs" />
+                    <ui:Label tabindex="-1" text="&lt;a href= https://platform.openai.com/docs/api-reference/chat/create&gt;Open AI docs&lt;/a&gt;" display-tooltip-when-elided="true" name="OpenAIDocs" style="margin-bottom: 5px; margin-top: 5px; margin-left: 3px; margin-right: 3px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="SettingsContent" style="background-color: rgba(0, 0, 0, 0); display: none; flex-grow: 1; flex-shrink: 0;" />
