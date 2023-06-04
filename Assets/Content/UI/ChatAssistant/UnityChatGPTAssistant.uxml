@@ -10,19 +10,19 @@
             <ui:Label tabindex="-1" text="Debug" display-tooltip-when-elided="true" name="DebugTab" class="tab-item" />
         </ui:VisualElement>
         <ui:VisualElement name="tabContent" style="flex-grow: 1; padding-left: 5px; padding-right: 5px; padding-bottom: 5px; padding-top: 0;">
-            <ui:VisualElement name="ChatContent" class="grow-panel space-between-panel" style="display: flex; flex-shrink: 1;">
-                <ui:VisualElement name="SystemView" style="margin-top: 2px; overflow: visible; flex-shrink: 0;">
-                    <ui:DropdownField index="0" name="SystemHelpDropdown" style="flex-grow: 1; overflow: hidden; margin-top: 0; margin-bottom: 0;" />
-                    <ui:TextField picking-mode="Ignore" value="You&apos;re helpful assistant giving short answer" multiline="true" name="SystemHelpInput" max-length="-1" style="overflow: hidden;" />
+            <ui:VisualElement name="ChatContent" class="grow-panel space-between-panel" style="display: flex; flex-shrink: 1; margin-top: 5px;">
+                <ui:VisualElement name="SystemView" style="margin-top: 2px; overflow: visible; flex-shrink: 0; flex-direction: row;">
+                    <ui:TextField picking-mode="Ignore" value="You&apos;re helpful assistant giving short answer" multiline="true" name="SystemHelpInput" max-length="-1" style="flex-shrink: 1; flex-grow: 1;" />
+                    <ui:DropdownField index="0" name="SystemHelpDropdown" style="flex-shrink: 1; width: 80px; max-height: 20px; min-height: 20px;" />
                 </ui:VisualElement>
-                <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="ChatView" class="grow-panel chat-view" style="flex-grow: 2; flex-shrink: 1;">
+                <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="ChatView" class="grow-panel chat-view" style="flex-grow: 2; flex-shrink: 1; background-color: rgba(0, 0, 0, 0.2); margin-bottom: 0;">
                     <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-user chat-item" style="display: none;" />
                     <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-gpt chat-item" style="display: none;" />
                     <ui:Label tabindex="-1" text="sdfgsdfg sgrg sdgdfsg sdgsdfg sd fgdfsg sdfgsdfg sdfgsdfgs dfds fgsdfg sdfg sdfgsdfg sdf gsfdsf sdf ssfsf df sdf sdfsd fsd fs fdss fsf sfsghgjhghjhjjhhjg asd asd a " display-tooltip-when-elided="true" name="Label" class="chat-item-user chat-item" style="display: none;" />
                     <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item" style="display: none;" />
                     <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item chat-item-statistics" style="display: none;" />
                 </ui:ScrollView>
-                <ui:VisualElement name="PromptView" class="prompt-view" style="flex-shrink: 0; margin-top: 5px;">
+                <ui:VisualElement name="PromptView" class="prompt-view" style="flex-shrink: 0; margin-top: 3px; margin-bottom: 5px;">
                     <ui:Foldout text="Prompt options" value="false" name="ChatOptions" style="margin-left: 0; margin-right: 0; margin-top: 5px; margin-bottom: 5px;">
                         <ui:Slider picking-mode="Ignore" label="temperature" value="1" high-value="2" name="TempValue" show-input-field="true" direction="Horizontal" inverted="false" />
                         <ui:Slider picking-mode="Ignore" label="top_p" value="1" high-value="1" name="ToppValue" show-input-field="true" />
@@ -34,10 +34,15 @@
                     </ui:Foldout>
                     <ui:TextField picking-mode="Ignore" value="Could you help me?" multiline="true" name="PromptInput" max-length="-1" class="prompot-input" />
                     <ui:Button text="send" display-tooltip-when-elided="true" name="SendButton" />
-                    <ui:Label tabindex="-1" text="&lt;a href= https://platform.openai.com/docs/api-reference/chat/create&gt;Open AI docs&lt;/a&gt;" display-tooltip-when-elided="true" name="OpenAIDocs" style="margin-bottom: 5px; margin-top: 5px; margin-left: 3px; margin-right: 3px;" />
+                    <ui:Label tabindex="-1" text="&lt;a href= https://platform.openai.com/docs/api-reference/chat/create&gt;Open AI docs&lt;/a&gt;" display-tooltip-when-elided="true" name="OpenAIDocs" style="margin-bottom: 0; margin-top: 5px; margin-left: 3px; margin-right: 3px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
-            <ui:VisualElement name="SettingsContent" style="background-color: rgba(0, 0, 0, 0); display: none; flex-grow: 1; flex-shrink: 0;" />
+            <ui:VisualElement name="SettingsContent" style="background-color: rgba(0, 0, 0, 0); display: none; flex-grow: 1; flex-shrink: 0;">
+                <ui:VisualElement>
+                    <ui:Label tabindex="-1" text="Chat" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 18px;" />
+                    <ui:VisualElement style="flex-grow: 1; background-color: rgb(210, 213, 226); height: 1px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
             <ui:VisualElement name="ArchiveContent" class="grow-panel space-between-panel" style="display: none; flex-shrink: 1;">
                 <ui:VisualElement name="ArchiveFile" style="margin-top: 4px;">
                     <ui:DropdownField index="0" name="ArchiveDropdown" style="margin-top: 0; margin-bottom: 0;" />
@@ -45,6 +50,10 @@
                 <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="ArchiveView" class="grow-panel chat-view" style="flex-shrink: 1;" />
             </ui:VisualElement>
             <ui:VisualElement name="ToolsContent" class="grow-panel space-between-panel" style="display: none; flex-shrink: 0;">
+                <ui:VisualElement>
+                    <ui:Label tabindex="-1" text="Tools" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 18px;" />
+                    <ui:VisualElement style="flex-grow: 1; background-color: rgb(210, 213, 226); height: 1px;" />
+                </ui:VisualElement>
                 <ui:ScrollView scroll-deceleration-rate="0,135" elasticity="0,1" name="DebugView" class="grow-panel chat-view">
                     <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-user chat-item" style="display: flex;" />
                     <ui:Label tabindex="-1" text="Label" display-tooltip-when-elided="true" class="chat-item-gpt chat-item" style="display: flex;" />
