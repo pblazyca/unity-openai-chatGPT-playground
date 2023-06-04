@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <Style src="project://database/Assets/Scripts/Assistant/Home/UnityChatGPTAssistant.uss?fileID=7433441132597879392&amp;guid=c98804df7478bf54f90d0e1e34d3b60b&amp;type=3#UnityChatGPTAssistant" />
+    <Style src="project://database/Assets/Content/UI/ChatAssistant/UnityChatGPTAssistant.uss?fileID=7433441132597879392&amp;guid=c98804df7478bf54f90d0e1e34d3b60b&amp;type=3#UnityChatGPTAssistant" />
     <ui:VisualElement name="menuRoot" class="root-panel">
         <ui:VisualElement name="tabs" style="flex-direction: column; background-color: rgba(0, 0, 0, 0.2);">
             <ui:Label tabindex="-1" text="Chat" display-tooltip-when-elided="true" name="ChatTab" enable-rich-text="true" class="tab-item tab-item-selected" />
@@ -22,17 +22,19 @@
                     <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item" style="display: none;" />
                     <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item chat-item-statistics" style="display: none;" />
                 </ui:ScrollView>
-                <ui:VisualElement name="PromptView" class="prompt-view" style="flex-shrink: 0;">
+                <ui:VisualElement name="PromptView" class="prompt-view" style="flex-shrink: 0; margin-top: 5px;">
+                    <ui:Foldout text="Prompt options" value="false" name="ChatOptions" style="margin-left: 0; margin-right: 0; margin-top: 5px; margin-bottom: 5px;">
+                        <ui:Slider picking-mode="Ignore" label="temperature" value="1" high-value="2" name="TempValue" show-input-field="true" direction="Horizontal" inverted="false" />
+                        <ui:Slider picking-mode="Ignore" label="top_p" value="1" high-value="1" name="ToppValue" show-input-field="true" />
+                        <ui:IntegerField label="n" value="1" name="ResponseNumber" />
+                        <ui:IntegerField label="max_tokens" value="2048" name="MaxTokensValue" />
+                        <ui:Slider picking-mode="Ignore" label="presence_penalty" value="0" high-value="2" name="PresenceValue" low-value="-2" show-input-field="true" />
+                        <ui:Slider picking-mode="Ignore" label="frequency_penalty" value="0" high-value="2" name="FrequencyValue" low-value="-2" show-input-field="true" />
+                        <ui:TextField picking-mode="Ignore" label="user" name="UserIDValue" />
+                    </ui:Foldout>
                     <ui:TextField picking-mode="Ignore" value="Could you help me?" multiline="true" name="PromptInput" max-length="-1" class="prompot-input" />
-                    <ui:Label tabindex="-1" text="&lt;a href= https://platform.openai.com/docs/api-reference/chat/create&gt;Open AI docs&lt;/a&gt;" display-tooltip-when-elided="true" />
-                    <ui:Slider picking-mode="Ignore" label="temperature" value="1" high-value="2" name="TempValue" show-input-field="true" direction="Horizontal" inverted="false" />
-                    <ui:Slider picking-mode="Ignore" label="top_p" value="1" high-value="1" name="ToppValue" show-input-field="true" />
-                    <ui:IntegerField label="n" value="1" name="ResponseNumber" />
-                    <ui:IntegerField label="max_tokens" value="2048" name="MaxTokensValue" />
-                    <ui:Slider picking-mode="Ignore" label="presence_penalty" value="0" high-value="2" name="PresenceValue" low-value="-2" show-input-field="true" />
-                    <ui:Slider picking-mode="Ignore" label="frequency_penalty" value="0" high-value="2" name="FrequencyValue" low-value="-2" show-input-field="true" />
-                    <ui:TextField picking-mode="Ignore" label="user" name="UserIDValue" />
                     <ui:Button text="send" display-tooltip-when-elided="true" name="SendButton" />
+                    <ui:Label tabindex="-1" text="&lt;a href= https://platform.openai.com/docs/api-reference/chat/create&gt;Open AI docs&lt;/a&gt;" display-tooltip-when-elided="true" name="OpenAIDocs" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="SettingsContent" style="background-color: rgba(0, 0, 0, 0); display: none; flex-grow: 1; flex-shrink: 0;" />
