@@ -1,11 +1,6 @@
-using System.Collections.Generic;
-using OpenAI;
-using OpenAI.Chat;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using InditeHappiness.LLM.Archive;
-using System;
 
 namespace InditeHappiness.LLM.Assistant
 {
@@ -44,6 +39,7 @@ namespace InditeHappiness.LLM.Assistant
 
         private void PrepareInterface()
         {
+            SettingsPanel settingsPanel = new(rootVisualElement, AssistantStyleSheet);
             ArchivePanel archivePanel = new(rootVisualElement, AssistantStyleSheet);
             ChatPanel chatPanel = new(rootVisualElement, AssistantStyleSheet);
 

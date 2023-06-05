@@ -42,6 +42,7 @@
                     <ui:Label tabindex="-1" text="Chat" display-tooltip-when-elided="true" style="-unity-font-style: bold; font-size: 18px; margin-left: 3px; margin-right: 3px;" />
                     <ui:VisualElement style="flex-grow: 1; background-color: rgb(210, 213, 226); height: 1px; margin-left: 2px; margin-right: 3px;" />
                     <ui:EnumField label="Response Mode" type="InditeHappiness.LLM.ChatResponseMode, com.pbindite.openai-unity-assistant" value="FULL" name="ChatResponseMode" style="margin-top: 5px;" />
+                    <ui:ListView show-add-remove-footer="true" reorder-mode="Animated" show-foldout-header="true" reorderable="true" header-title="Assistant Messages" name="AssistantMessagesList" show-alternating-row-backgrounds="ContentOnly" />
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="ArchiveContent" class="grow-panel space-between-panel" style="display: none; flex-shrink: 1;">
