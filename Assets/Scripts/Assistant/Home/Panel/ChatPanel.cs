@@ -109,10 +109,6 @@ namespace InditeHappiness.LLM.Assistant
 
             ChatArchive.SaveBulk();
             Root.Q<TextField>("PromptInput").value = string.Empty;
-
-            UnityEngine.Debug.Log(chatView.ElementAt(chatView.childCount - 1));
-            UnityEngine.Debug.Log(chatView.childCount);
-
             EditorCoroutineUtility.StartCoroutine(DelayedScroll(chatView, chatView.ElementAt(chatView.childCount - 1)), this);
         }
 
