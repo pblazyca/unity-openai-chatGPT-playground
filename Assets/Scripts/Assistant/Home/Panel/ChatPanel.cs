@@ -4,6 +4,9 @@ using System.Linq;
 using InditeHappiness.LLM.Archive;
 using OpenAI.Chat;
 using UnityEngine.UIElements;
+using System.Collections;
+using UnityEngine;
+using Unity.EditorCoroutines.Editor;
 
 namespace InditeHappiness.LLM.Assistant
 {
@@ -77,6 +80,7 @@ namespace InditeHappiness.LLM.Assistant
 
             chatView.Add(ItemFactory.CreateUserPromptItem(prompt));
             ChatArchive.RegisterUserPrompt(prompt);
+            EditorCoroutineUtility.StartCoroutine(DelayedScroll(chatView, chatView.ElementAt(chatView.childCount - 1)), this);
 
             switch (Root.Q<EnumField>("ChatResponseMode").value)
             {
@@ -87,6 +91,7 @@ namespace InditeHappiness.LLM.Assistant
                     chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
 
                     ChatArchive.RegisterPromptResponse(result.FirstChoice.ToString(), stats, result.Created);
+                    chatView.verticalScroller.value = chatView.verticalScroller.highValue > 0 ? chatView.verticalScroller.highValue : 0;
                     break;
                 case ChatResponseMode.PARTIAL:
                     Label responseItem = ItemFactory.CreateChatResponseItem(string.Empty);
@@ -104,6 +109,17 @@ namespace InditeHappiness.LLM.Assistant
 
             ChatArchive.SaveBulk();
             Root.Q<TextField>("PromptInput").value = string.Empty;
+
+            UnityEngine.Debug.Log(chatView.ElementAt(chatView.childCount - 1));
+            UnityEngine.Debug.Log(chatView.childCount);
+
+            EditorCoroutineUtility.StartCoroutine(DelayedScroll(chatView, chatView.ElementAt(chatView.childCount - 1)), this);
+        }
+
+        private IEnumerator DelayedScroll(ScrollView list, VisualElement item)
+        {
+            yield return new WaitForSeconds(0.1f);
+            list.ScrollTo(item);
         }
 
         private ChatRequest PreparePromptRequest(string prompt)
