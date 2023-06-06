@@ -22,7 +22,7 @@
                     <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item" style="display: none;" />
                     <ui:Label tabindex="-1" text=" asage gegsdgf sg sdfg sdgsdg serg sdfgsdg sdfg sdfg sdfg sdfg dfg sdfg sdfg dsfg sdfg" display-tooltip-when-elided="true" name="Label" class="chat-item-gpt chat-item chat-item-statistics" style="display: none;" />
                 </ui:ScrollView>
-                <ui:VisualElement name="PromptView" class="prompt-view" style="flex-shrink: 0; margin-top: 3px; margin-bottom: 5px;">
+                <ui:VisualElement name="PromptView" class="prompt-view" style="flex-shrink: 0; margin-top: 3px; margin-bottom: 0;">
                     <ui:Foldout text="Prompt options" value="false" name="ChatOptions" style="margin-left: 0; margin-right: 0; margin-top: 5px; margin-bottom: 5px;">
                         <ui:Slider picking-mode="Ignore" label="temperature" value="1" high-value="2" name="TempValue" show-input-field="true" direction="Horizontal" inverted="false" />
                         <ui:Slider picking-mode="Ignore" label="top_p" value="1" high-value="1" name="ToppValue" show-input-field="true" />
@@ -33,8 +33,10 @@
                         <ui:TextField picking-mode="Ignore" label="user" name="UserIDValue" />
                     </ui:Foldout>
                     <ui:TextField picking-mode="Ignore" value="Could you help me?" multiline="true" name="PromptInput" max-length="-1" class="prompot-input" />
-                    <ui:Button text="send" display-tooltip-when-elided="true" name="SendButton" />
-                    <ui:Label tabindex="-1" text="&lt;a href= https://platform.openai.com/docs/api-reference/chat/create&gt;Open AI docs&lt;/a&gt;" display-tooltip-when-elided="true" name="OpenAIDocs" style="margin-bottom: 0; margin-top: 5px; margin-left: 3px; margin-right: 3px;" />
+                    <ui:VisualElement style="flex-grow: 1; background-color: rgba(0, 0, 0, 0); flex-direction: row; justify-content: space-between;">
+                        <ui:Label tabindex="-1" text="&lt;a href= https://platform.openai.com/docs/api-reference/chat/create&gt;Open AI docs&lt;/a&gt;" display-tooltip-when-elided="true" name="OpenAIDocs" style="font-size: 12px; -unity-text-align: middle-left; margin-left: 3px; margin-right: 3px; margin-top: 1px; margin-bottom: 1px; padding-left: 0;" />
+                        <ui:Button text="send" display-tooltip-when-elided="true" name="SendButton" style="width: 80px; flex-shrink: 1;" />
+                    </ui:VisualElement>
                 </ui:VisualElement>
             </ui:VisualElement>
             <ui:VisualElement name="SettingsContent" style="background-color: rgba(0, 0, 0, 0); display: none; flex-grow: 1; flex-shrink: 0; margin-top: 5px;">
