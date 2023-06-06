@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79d4578c1275f0641a29f8abe3511e58, type: 3}
+  m_Name: Chat Assistant Settings
+  m_EditorClassIdentifier: 
+  <AssistantName>k__BackingField: ChatGPT Assistant
+  <AssistantDescription>k__BackingField: Unity ChatGPT Assistant
+  <AssistantVersion>k__BackingField: 0.0.1
+  <AssistantAuthor>k__BackingField: Indite Happiness | pblazyca
+  <AssistantAuthorUrl>k__BackingField: 
+  <AssistantRepositoryUrl>k__BackingField: 
+  <AssistantResponseMode>k__BackingField: 0
+  <AssistantMessages>k__BackingField:
+  - You're helpful assistant giving short answer
+  - You're helpful assistant giving bullet points answer
+  - You're helpful assistant support with Unity giving detailed answer
+  - You're helpful assistant giving step by step instruction
+  - You're helpful assistant listing action points from user prompt
