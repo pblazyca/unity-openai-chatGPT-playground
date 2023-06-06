@@ -17,8 +17,8 @@ namespace InditeHappiness.LLM.Assistant
         [MenuItem("Tools/Chat GPT Assistant")]
         public static void ShowAssistant()
         {
-            ChatAssistantHome window = GetWindow<ChatAssistantHome>();
-            window.titleContent = new("Chat GPT Assistant");
+            ChatAssistantHome window = GetWindow<ChatAssistantHome>("Chat GPT Assistant");
+            window.minSize = new(800, 600);
         }
 
         public void CreateGUI()

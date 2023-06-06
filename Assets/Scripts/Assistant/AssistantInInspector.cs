@@ -25,7 +25,7 @@ namespace InditeHappiness.LLM.Assistant
         {
             if (GUILayout.Button("Open Chat"))
             {
-                EditorWindow window = EditorWindow.GetWindow<ChatAssistantHome>();
+                ChatAssistantHome.ShowAssistant();
             }
         }
 
