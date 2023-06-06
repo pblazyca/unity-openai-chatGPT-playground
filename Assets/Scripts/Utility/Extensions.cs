@@ -15,5 +15,22 @@ namespace InditeHappiness.LLM
         {
             return target.ToString().ToLower();
         }
+
+        public static string SpaceBeforeUpperLetter(this string target)
+        {
+            string result = string.Empty;
+
+            for (int i = 0; i < target.Length; i++)
+            {
+                if (char.IsUpper(target[i]) == true)
+                {
+                    result += " ";
+                }
+
+                result += target[i];
+            }
+
+            return result;
+        }
     }
 }
