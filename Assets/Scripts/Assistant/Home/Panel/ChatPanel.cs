@@ -82,10 +82,14 @@ namespace InditeHappiness.LLM.Assistant
                 case ChatResponseMode.FULL:
                     ChatResponse result = await ChatAssistant.SendPrompt(promptRequest);
                     string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
-                    chatView.Add(ItemFactory.CreateChatResponseItem(result.FirstChoice.ToString()));
-                    chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
 
-                    ChatArchive.RegisterPromptResponse(result.FirstChoice.ToString(), stats, result.Created);
+                    foreach (Choice choice in result.Choices)
+                    {
+                        chatView.Add(ItemFactory.CreateChatResponseItem(choice.Message));
+                        chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
+                        ChatArchive.RegisterPromptResponse(choice.Message, stats, result.Created);
+                    }
+
                     chatView.verticalScroller.value = chatView.verticalScroller.highValue > 0 ? chatView.verticalScroller.highValue : 0;
                     break;
                 case ChatResponseMode.PARTIAL:
