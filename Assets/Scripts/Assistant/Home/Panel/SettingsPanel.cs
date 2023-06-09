@@ -17,14 +17,9 @@ namespace InditeHappiness.LLM.Assistant
         {
             //Root.Q<EnumField>("ChatResponseMode").value;
 
-            List<string> source = new(){
-                "You're helpful assistant giving short answer",
-                "You're helpful assistant giving bullet points answer",
-                "You're helpful assistant support with Unity giving detailed answer",
-                "You're helpful assistant giving step by step instruction",
-                "You're helpful assistant listing action points from user prompt"
-            };
+            ChatAssistantSettings settings = Utils.LoadInstanceForEditorTools<ChatAssistantSettings>(typeof(ChatAssistantSettings));
 
+            List<string> source = settings.AssistantMessages;
             ListView listView = Root.Q<ListView>("AssistantMessagesList");
 
             Func<VisualElement> makeItem = () => new TextField();
