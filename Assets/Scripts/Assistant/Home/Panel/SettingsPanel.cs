@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.UIElements;
 
 namespace InditeHappiness.LLM.Assistant
@@ -15,23 +16,29 @@ namespace InditeHappiness.LLM.Assistant
 
         private void PrepareChatSettings()
         {
-            //Root.Q<EnumField>("ChatResponseMode").value;
-
             ChatAssistantSettings settings = Utils.LoadInstanceForEditorTools<ChatAssistantSettings>(typeof(ChatAssistantSettings));
 
             List<string> source = settings.AssistantMessages;
             ListView listView = Root.Q<ListView>("AssistantMessagesList");
 
             Func<VisualElement> makeItem = () => new TextField();
-            Action<VisualElement, int> bindItem = (e, index) =>
+            Action<VisualElement, int> bindItem = (element, index) =>
             {
-                (e as TextField).value = source[index];
-                (e as TextField).RegisterValueChangedCallback((e) => source[index] = e.newValue);
+                TextField textField = element as TextField;
+                textField.value = source[index];
+                textField.RegisterValueChangedCallback((changeEvent) =>
+                {
+                    source[index] = changeEvent.newValue;
+                    Root.Q<DropdownField>("SystemHelpDropdown").choices = new(Root.Q<ListView>("AssistantMessagesList").itemsSource.Cast<string>());
+                });
             };
 
             listView.makeItem = makeItem;
             listView.bindItem = bindItem;
             listView.itemsSource = source;
+
+            listView.itemsAdded += (e) => Root.Q<DropdownField>("SystemHelpDropdown").choices = source;
+            listView.itemsRemoved += (e) => Root.Q<DropdownField>("SystemHelpDropdown").choices = source;
         }
     }
 }

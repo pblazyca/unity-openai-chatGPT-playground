@@ -27,11 +27,7 @@ namespace InditeHappiness.LLM.Assistant
 
         private void PrepareSystemMessageDropdown()
         {
-            List<string> messages = new(Root.Q<ListView>("AssistantMessagesList").itemsSource.Cast<string>());
-            Root.Q<ListView>("AssistantMessagesList").itemsAdded += (e) => Root.Q<DropdownField>("SystemHelpDropdown").choices = new(Root.Q<ListView>("AssistantMessagesList").itemsSource.Cast<string>());
-            Root.Q<ListView>("AssistantMessagesList").itemsRemoved += (e) => Root.Q<DropdownField>("SystemHelpDropdown").choices = new(Root.Q<ListView>("AssistantMessagesList").itemsSource.Cast<string>());
-
-            Root.Q<DropdownField>("SystemHelpDropdown").choices = messages;
+            Root.Q<DropdownField>("SystemHelpDropdown").choices = new(Root.Q<ListView>("AssistantMessagesList").itemsSource.Cast<string>());
             Root.Q<DropdownField>("SystemHelpDropdown").index = 0;
             Root.Q<DropdownField>("SystemHelpDropdown").RegisterValueChangedCallback((e) => Root.Q<TextField>("SystemHelpInput").value = Root.Q<DropdownField>("SystemHelpDropdown").value);
         }
