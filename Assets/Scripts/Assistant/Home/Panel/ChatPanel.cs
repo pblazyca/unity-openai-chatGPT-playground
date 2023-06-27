@@ -91,7 +91,8 @@ namespace InditeHappiness.LLM.Assistant
                     for (int i = 0; i < result.Choices.Count; i++)
                     {
                         responseNumberCollection[i].text = (result.Choices[i].Message);
-                        chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
+                        int index = chatView.IndexOf(responseNumberCollection[i]);
+                        chatView.Insert(index + 1, ItemFactory.CreateChatResponseStatisticsItem(stats));
                         ChatArchive.RegisterPromptResponse(result.Choices[i].Message, stats, result.Created);
                     }
 
