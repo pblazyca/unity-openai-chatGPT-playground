@@ -76,14 +76,23 @@ namespace InditeHappiness.LLM.Assistant
             switch (Root.Q<EnumField>("ChatResponseMode").value)
             {
                 case ChatResponseMode.FULL:
+                    Label[] responseNumberCollection = new Label[Root.Q<IntegerField>("ResponseNumber").value];
+
+                    for (int i = 0; i < responseNumberCollection.Length; i++)
+                    {
+                        Label responseLabel = ItemFactory.CreateChatResponseItem("...");
+                        responseNumberCollection[i] = responseLabel;
+                        chatView.Add(responseLabel);
+                    }
+
                     ChatResponse result = await ChatAssistant.SendPrompt(promptRequest);
                     string stats = $"Prompt tokens: {result.Usage.PromptTokens}, Completion tokens: {result.Usage.CompletionTokens}, Total tokens: {result.Usage.TotalTokens}";
 
-                    foreach (Choice choice in result.Choices)
+                    for (int i = 0; i < result.Choices.Count; i++)
                     {
-                        chatView.Add(ItemFactory.CreateChatResponseItem(choice.Message));
+                        responseNumberCollection[i].text = (result.Choices[i].Message);
                         chatView.Add(ItemFactory.CreateChatResponseStatisticsItem(stats));
-                        ChatArchive.RegisterPromptResponse(choice.Message, stats, result.Created);
+                        ChatArchive.RegisterPromptResponse(result.Choices[i].Message, stats, result.Created);
                     }
 
                     chatView.verticalScroller.value = chatView.verticalScroller.highValue > 0 ? chatView.verticalScroller.highValue : 0;
