@@ -58,7 +58,7 @@ namespace InditeHappiness.LLM.Assistant
         private void Init()
         {
             string configFilePath = Application.dataPath;
-            OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
+            OpenAI = new(OpenAIAuthentication.Default.LoadFromDirectory(configFilePath));
         }
     }
 }

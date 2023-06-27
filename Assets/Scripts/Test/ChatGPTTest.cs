@@ -13,7 +13,7 @@ namespace InditeHappiness.LLM.Samples
         protected virtual void Start()
         {
             string configFilePath = $"{Application.dataPath}";
-            OpenAI = new(OpenAIAuthentication.LoadFromDirectory(configFilePath));
+            OpenAI = new(OpenAIAuthentication.Default.LoadFromDirectory(configFilePath));
 
             PrintAllOpenAIModels();
             PrintFirstAnswer();
