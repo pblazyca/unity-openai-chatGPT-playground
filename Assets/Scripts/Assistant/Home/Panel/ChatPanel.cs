@@ -90,7 +90,7 @@ namespace InditeHappiness.LLM.Assistant
 
                     for (int i = 0; i < result.Choices.Count; i++)
                     {
-                        responseNumberCollection[i].text = (result.Choices[i].Message);
+                        EditorCoroutineUtility.StartCoroutine(Typewrite(responseNumberCollection[i], result.Choices[i].Message), this);
                         int index = chatView.IndexOf(responseNumberCollection[i]);
                         chatView.Insert(index + 1, ItemFactory.CreateChatResponseStatisticsItem(stats));
                         ChatArchive.RegisterPromptResponse(result.Choices[i].Message, stats, result.Created);
@@ -121,6 +121,17 @@ namespace InditeHappiness.LLM.Assistant
         {
             yield return new WaitForSeconds(0.1f);
             list.ScrollTo(item);
+        }
+
+        private IEnumerator Typewrite(Label label, string text)
+        {
+            label.text = string.Empty;
+
+            foreach (char character in text)
+            {
+                label.text += character;
+                yield return new WaitForSeconds(0.005f);
+            }
         }
 
         private ChatRequest PreparePromptRequest(string prompt)
